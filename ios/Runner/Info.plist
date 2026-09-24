@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -69,5 +69,10 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>La aplicacion usa el microfono para dictar las cifras del censo diario.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>La aplicacion convierte a texto las cifras que usted dicta para llenar el censo diario.</string></dict>
+	<string>La aplicacion convierte a texto las cifras que usted dicta para llenar el censo diario.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Esta aplicacion necesita acceso a la camara para escanear y capturar documentos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Esta aplicacion necesita acceso a la galeria para seleccionar imagenes previas de documentos.</string>
+</dict>
 </plist>
