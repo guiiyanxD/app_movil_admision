@@ -1,0 +1,64 @@
+name: app_movil
+description: >-
+  Aplicación móvil del Servicio de Admisión — Caja Petrolera de Salud,
+  Regional Santa Cruz. Módulo Censo Diario (EST-1), carga manual histórica.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.5.0
+
+# Versiones resueltas por `flutter pub add` (tool/bootstrap.ps1). El pin real
+# vive en pubspec.lock. Ver README.md §2 y §7 (problemas conocidos).
+dependencies:
+  dio: ^5.11.0
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  flutter_secure_storage: ^10.3.1
+  go_router: ^17.3.0
+  intl: ^0.20.3
+
+  # Construye el documento de los reportes (SPEC-004, D-1).
+  pdf: ^3.11.0
+
+  # PIN DELIBERADO — no subir a 13.x sin migrar antes el proyecto a AGP 9.
+  #
+  # permission_handler 13.0.0 arrastra permission_handler_android 14.0.0, cuyo
+  # build.gradle.kts está escrito para Android Gradle Plugin 9 / Gradle 9. Este
+  # proyecto corre AGP 8.11.1 + Gradle 8.14 (lo que genera el Flutter actual),
+  # y el script del plugin no compila contra esa cadena:
+  #   Unresolved reference: compilerOptions / jvmTarget
+  #   'srcDirs(vararg Any)' is deprecated. Use `directories` mutable set instead
+  #
+  # La línea 12.x depende de permission_handler_android 13.x, que sí compila
+  # con AGP 8. Ver README §7 y riesgo R-10 del ADR-0005.
+  permission_handler: ^12.0.3
+
+  # Diálogo del sistema: imprimir, compartir y guardar con una sola
+  # integración. Trae código nativo Android e iOS, así que si rompe el build de
+  # Gradle aplica la misma política que arriba — se fija la versión del plugin,
+  # no se migra el toolchain a mitad de sprint (SPEC-004, R-14).
+  printing: ^5.13.0
+
+  speech_to_text: ^7.4.0
+
+  # Captura de fotografías/imágenes del formulario HC-2
+  image_picker: ^1.2.3
+  image: ^4.8.0
+
+  # Reconocimiento óptico de caracteres (OCR) local on-device
+  google_mlkit_text_recognition: ^0.16.0
+
+  # Cámara en vivo con visor rectangular para escaneo de documentos HC-2
+  camera: ^0.12.0+2
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.5
+  very_good_analysis: ^10.2.0
+
+flutter:
+  uses-material-design: true
