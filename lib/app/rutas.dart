@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 abstract final class Rutas {
   static const String diagnosticoDictado = '/diagnostico/dictado';
   static const String pruebaPdf = '/diagnostico/pdf';
+  static const String pruebaSentry = '/diagnostico/sentry';
   static const String reporteCenso = '/reporteria/censo';
   static const String tableroCamas = '/internaciones/tablero';
 

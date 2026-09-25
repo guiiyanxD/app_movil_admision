@@ -1,4 +1,5 @@
 import 'package:app_movil/app/app.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:app_movil/core/config/config_providers.dart';
 import 'package:app_movil/core/config/gestor_servidor.dart';
 import 'package:app_movil/core/red/api_client.dart';
@@ -36,10 +37,18 @@ Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('es');
 
-  runApp(
-    ProviderScope(
-      overrides: _dependencias(),
-      child: const AppMovil(),
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://a73a0404dcfdd206ff33cfa8f47ce887@o4512144935288832.ingest.us.sentry.io/4512144949903360';
+
+      options.tracesSampleRate = 0.2;
+    },
+    appRunner: () => runApp(
+      ProviderScope(
+        overrides: _dependencias(),
+        child: const AppMovil(),
+      ),
     ),
   );
 }

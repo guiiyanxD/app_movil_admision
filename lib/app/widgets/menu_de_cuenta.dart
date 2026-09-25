@@ -2,6 +2,7 @@ import 'package:app_movil/app/rutas.dart';
 import 'package:app_movil/features/auth/presentation/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sentry/sentry.dart';
 
 /// Menú de cuenta del `AppBar`: quién sos, herramientas y cerrar sesión.
 ///
@@ -35,22 +36,6 @@ class MenuDeCuenta extends ConsumerWidget {
           ),
         ),
         const PopupMenuDivider(),
-        const PopupMenuItem(
-          value: Rutas.diagnosticoDictado,
-          child: ListTile(
-            leading: Icon(Icons.mic_none),
-            title: Text('Probar dictado'),
-            contentPadding: EdgeInsets.zero,
-          ),
-        ),
-        const PopupMenuItem(
-          value: Rutas.pruebaPdf,
-          child: ListTile(
-            leading: Icon(Icons.picture_as_pdf_outlined),
-            title: Text('Probar PDF'),
-            contentPadding: EdgeInsets.zero,
-          ),
-        ),
         const PopupMenuItem(
           value: _salir,
           child: ListTile(

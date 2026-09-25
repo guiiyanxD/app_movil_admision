@@ -11,6 +11,7 @@ environment:
 # Versiones resueltas por `flutter pub add` (tool/bootstrap.ps1). El pin real
 # vive en pubspec.lock. Ver README.md §2 y §7 (problemas conocidos).
 dependencies:
+  sentry_flutter: ^9.30.1
   dio: ^5.11.0
   flutter:
     sdk: flutter
@@ -54,8 +55,10 @@ dependencies:
   camera: ^0.12.0+2
   url_launcher: ^6.3.2
   meta: ^1.17.0
+  sentry: ^9.30.1
 
 dev_dependencies:
+  sentry_dart_plugin: ^3.4.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.5
@@ -63,3 +66,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: willdeveloper

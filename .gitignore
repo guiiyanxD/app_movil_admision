@@ -52,3 +52,7 @@ windows/flutter/ephemeral/
 # SO
 .DS_Store
 Thumbs.db
+
+sentry.properties
+
+sentry.properties
