@@ -89,58 +89,6 @@ class PantallaCuentaPerfil extends ConsumerWidget {
 
           const SizedBox(height: 12),
 
-          // ── Herramientas de Diagnóstico ─────────────────────────────
-          Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 6),
-            child: Text(
-              'HERRAMIENTAS DE PRUEBA',
-              style: tema.textTheme.labelMedium?.copyWith(
-                color: tema.colorScheme.primary,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.8,
-              ),
-            ),
-          ),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: tema.colorScheme.surfaceContainerHighest,
-                    foregroundColor: tema.colorScheme.primary,
-                    child: const Icon(Icons.mic, size: 20),
-                  ),
-                  title: const Text('Diagnóstico de Dictado por Voz'),
-                  subtitle:
-                      const Text('Calibrar y medir precisión de voz (es-BO)'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    HapticFeedback.selectionClick();
-                    Navigator.of(context).pushNamed(Rutas.diagnosticoDictado);
-                  },
-                ),
-                const Divider(indent: 16, endIndent: 16, height: 1),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: tema.colorScheme.surfaceContainerHighest,
-                    foregroundColor: tema.colorScheme.primary,
-                    child: const Icon(Icons.picture_as_pdf, size: 20),
-                  ),
-                  title: const Text('Prueba de Generación PDF'),
-                  subtitle: const Text(
-                      'Verificar render y fuentes del reporte impreso'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    HapticFeedback.selectionClick();
-                    Navigator.of(context).pushNamed(Rutas.pruebaPdf);
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
           // ── Conexión y Sistema ──────────────────────────────────────
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 6),
