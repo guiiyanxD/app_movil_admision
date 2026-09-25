@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PantallaMoverCama extends ConsumerStatefulWidget {
   const PantallaMoverCama({
-    super.key,
     required this.internacionId,
     required this.servicioActualId,
     required this.esTrasladoInterno,
+    super.key,
   });
 
   final String internacionId;
@@ -40,13 +40,18 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
     final params = MoverCamaParams(
       internacionId: widget.internacionId,
       camaId: _camaSeleccionada!.id,
-      especialidadId: _especialidadTratanteId ?? _camaSeleccionada!.especialidadNativaId,
+      especialidadId:
+          _especialidadTratanteId ?? _camaSeleccionada!.especialidadNativaId,
     );
 
     if (widget.esTrasladoInterno) {
-      ref.read(operacionesInternacionProvider.notifier).trasladarInterno(params);
+      ref
+          .read(operacionesInternacionProvider.notifier)
+          .trasladarInterno(params);
     } else {
-      ref.read(operacionesInternacionProvider.notifier).trasladarServicio(params);
+      ref
+          .read(operacionesInternacionProvider.notifier)
+          .trasladarServicio(params);
     }
   }
 
@@ -54,7 +59,8 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
   Widget build(BuildContext context) {
     final estadoOp = ref.watch(operacionesInternacionProvider);
 
-    ref.listen<AsyncValue<void>>(operacionesInternacionProvider, (previo, actual) {
+    ref.listen<AsyncValue<void>>(operacionesInternacionProvider,
+        (previo, actual) {
       actual.whenOrNull(
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -76,15 +82,19 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.esTrasladoInterno ? 'Traslado Interno' : 'Traslado de Servicio'),
+        title: Text(widget.esTrasladoInterno
+            ? 'Traslado Interno'
+            : 'Traslado de Servicio'),
       ),
       body: camasDisponiblesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error al cargar camas: $err')),
+        error: (err, stack) =>
+            Center(child: Text('Error al cargar camas: $err')),
         data: (todasLasCamas) {
           // Filtrar camas por el servicio seleccionado y que no estén ocupadas
           final camasFiltradas = todasLasCamas
-              .where((c) => c.servicioId == _servicioSeleccionadoId && !c.esOcupada)
+              .where((c) =>
+                  c.servicioId == _servicioSeleccionadoId && !c.esOcupada)
               .toList();
 
           // Extraer especialidades únicas de todas las camas del tablero
@@ -103,42 +113,48 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 24),
-
               if (!widget.esTrasladoInterno) ...[
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
                     labelText: 'Servicio Destino',
                     border: OutlineInputBorder(),
                   ),
-                  value: _servicioSeleccionadoId,
+                  initialValue: _servicioSeleccionadoId,
                   items: servicios
-                      .where((s) => s.id != widget.servicioActualId) // No puede trasladarse al mismo servicio
-                      .map((s) => DropdownMenuItem(
-                            value: s.id,
-                            child: Text(s.nombre),
-                          ))
+                      .where((s) =>
+                          s.id !=
+                          widget
+                              .servicioActualId) // No puede trasladarse al mismo servicio
+                      .map(
+                        (s) => DropdownMenuItem(
+                          value: s.id,
+                          child: Text(s.nombre),
+                        ),
+                      )
                       .toList(),
                   onChanged: (val) {
                     setState(() {
                       _servicioSeleccionadoId = val;
-                      _camaSeleccionada = null; // Reiniciar cama al cambiar de servicio
+                      _camaSeleccionada =
+                          null; // Reiniciar cama al cambiar de servicio
                     });
                   },
                 ),
                 const SizedBox(height: 24),
               ],
-
               DropdownButtonFormField<CamaTablero>(
                 decoration: const InputDecoration(
                   labelText: 'Cama Destino',
                   border: OutlineInputBorder(),
                 ),
-                value: _camaSeleccionada,
+                initialValue: _camaSeleccionada,
                 items: camasFiltradas
-                    .map((c) => DropdownMenuItem(
-                          value: c,
-                          child: Text('${c.codigo} - ${c.especialidadNombre}'),
-                        ))
+                    .map(
+                      (c) => DropdownMenuItem(
+                        value: c,
+                        child: Text('${c.codigo} - ${c.especialidadNombre}'),
+                      ),
+                    )
                     .toList(),
                 onChanged: _servicioSeleccionadoId == null
                     ? null
@@ -151,20 +167,22 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
                 disabledHint: const Text('Seleccione un servicio primero'),
               ),
               const SizedBox(height: 24),
-
               if (_camaSeleccionada != null) ...[
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
                     labelText: 'Especialidad Tratante',
-                    helperText: 'Modifique solo si ingresará como cama prestada.',
+                    helperText:
+                        'Modifique solo si ingresará como cama prestada.',
                     border: OutlineInputBorder(),
                   ),
-                  value: _especialidadTratanteId,
+                  initialValue: _especialidadTratanteId,
                   items: listaEspecialidades
-                      .map((e) => DropdownMenuItem(
-                            value: e.key,
-                            child: Text(e.value),
-                          ))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e.key,
+                          child: Text(e.value),
+                        ),
+                      )
                       .toList(),
                   onChanged: (val) {
                     setState(() {
@@ -174,7 +192,6 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
                 ),
                 const SizedBox(height: 32),
               ],
-
               FilledButton.icon(
                 onPressed: _camaSeleccionada == null || estadoOp.isLoading
                     ? null
@@ -183,10 +200,13 @@ class _PantallaMoverCamaState extends ConsumerState<PantallaMoverCama> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
                       )
                     : const Icon(Icons.transfer_within_a_station),
-                label: Text(estadoOp.isLoading ? 'Procesando...' : 'Confirmar Traslado'),
+                label: Text(estadoOp.isLoading
+                    ? 'Procesando...'
+                    : 'Confirmar Traslado'),
               ),
             ],
           );

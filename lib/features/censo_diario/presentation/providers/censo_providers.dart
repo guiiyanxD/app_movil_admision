@@ -34,8 +34,8 @@ final censoRepositoryProvider = Provider<CensoDiarioRepository>((ref) {
 /// Se cachea por sesión: es un catálogo que cambia poco y pedirlo en cada
 /// pantalla sería castigar una conexión de hospital por nada.
 final serviciosProvider = FutureProvider<List<Servicio>>((ref) async {
-  final resultado = await ref.watch(censoRepositoryProvider)
-      .obtenerServiciosActivos();
+  final resultado =
+      await ref.watch(censoRepositoryProvider).obtenerServiciosActivos();
 
   return resultado.fold(
     (falla) => throw falla,
@@ -62,16 +62,18 @@ final especialidadesProvider = FutureProvider<List<MapeoVaciado>>((ref) async {
 
 /// Cierre de una fecha, para bloquear en el calendario las ya cerradas por el
 /// cálculo automático (V-09) antes de que el operador empiece a cargar.
-final cierreProvider =
+final FutureProviderFamily<CierreCenso?, DateTime> cierreProvider =
     FutureProvider.family<CierreCenso?, DateTime>((ref, fecha) async {
-  final resultado = await ref.watch(censoRepositoryProvider).obtenerCierre(fecha);
+  final resultado =
+      await ref.watch(censoRepositoryProvider).obtenerCierre(fecha);
   return resultado.fold((falla) => throw falla, (cierre) => cierre);
 });
 
 /// Progreso del día. `autoDispose` a propósito: debe refrescarse al volver a
 /// la pantalla, porque `cuadra` se recalcula contra la capacidad actual.
-final progresoDiaProvider =
-    FutureProvider.autoDispose.family<ProgresoDia, DateTime>((ref, fecha) async {
+final AutoDisposeFutureProviderFamily<ProgresoDia, DateTime>
+    progresoDiaProvider = FutureProvider.autoDispose
+        .family<ProgresoDia, DateTime>((ref, fecha) async {
   final resultado =
       await ref.watch(censoRepositoryProvider).obtenerProgresoDia(fecha);
   return resultado.fold((falla) => throw falla, (progreso) => progreso);
@@ -105,7 +107,7 @@ typedef CargasDelDia = ({
 /// **Nunca lanza.** Un `AsyncError` acá impediría abrir el formulario, y
 /// dejaría al operador sin poder trabajar por una lectura que es una mejora,
 /// no un requisito: el fallo viaja como valor y lo resuelve quien lo consume.
-final cargasDelDiaProvider =
+final FutureProviderFamily<CargasDelDia, DateTime> cargasDelDiaProvider =
     FutureProvider.family<CargasDelDia, DateTime>((ref, fecha) async {
   final resultado =
       await ref.watch(censoRepositoryProvider).obtenerCargasDelDia(fecha);
@@ -127,8 +129,10 @@ typedef ArgsFormulario = ({DateTime fecha, Servicio servicio});
 ///
 /// Los argumentos son un record, así que la igualdad estructural hace que dos
 /// navegaciones al mismo servicio y fecha compartan estado sin trabajo extra.
-final censoFormProvider = NotifierProvider.autoDispose
-    .family<CensoFormNotifier, CensoFormState, ArgsFormulario>(
+final AutoDisposeNotifierProviderFamily<CensoFormNotifier, CensoFormState,
+        ArgsFormulario> censoFormProvider =
+    NotifierProvider.autoDispose
+        .family<CensoFormNotifier, CensoFormState, ArgsFormulario>(
   CensoFormNotifier.new,
 );
 

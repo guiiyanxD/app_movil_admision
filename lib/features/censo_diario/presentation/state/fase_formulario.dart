@@ -33,9 +33,7 @@ enum FaseFormulario {
 
   /// Fases en las que hay datos originados en voz sin confirmar.
   bool get esFaseDeVoz =>
-      this == escuchandoVoz ||
-      this == procesandoVoz ||
-      this == confirmandoVoz;
+      this == escuchandoVoz || this == procesandoVoz || this == confirmandoVoz;
 }
 
 /// Grafo de transiciones permitidas. Única fuente de verdad.

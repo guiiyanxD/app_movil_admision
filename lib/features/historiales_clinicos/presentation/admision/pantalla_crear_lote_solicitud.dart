@@ -1,5 +1,4 @@
 import 'package:app_movil/features/historiales_clinicos/presentation/providers/historiales_providers.dart';
-import 'package:app_movil/features/internaciones/domain/entities/cama_tablero.dart';
 import 'package:app_movil/features/internaciones/presentation/providers/tablero_camas_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,10 +7,12 @@ class PantallaCrearLoteSolicitud extends ConsumerStatefulWidget {
   const PantallaCrearLoteSolicitud({super.key});
 
   @override
-  ConsumerState<PantallaCrearLoteSolicitud> createState() => _PantallaCrearLoteSolicitudState();
+  ConsumerState<PantallaCrearLoteSolicitud> createState() =>
+      _PantallaCrearLoteSolicitudState();
 }
 
-class _PantallaCrearLoteSolicitudState extends ConsumerState<PantallaCrearLoteSolicitud> {
+class _PantallaCrearLoteSolicitudState
+    extends ConsumerState<PantallaCrearLoteSolicitud> {
   final Set<String> _seleccionadas = {};
 
   @override
@@ -35,7 +36,9 @@ class _PantallaCrearLoteSolicitudState extends ConsumerState<PantallaCrearLoteSo
         error: (err, stack) => Center(child: Text('Error: $err')),
         data: (camas) {
           // Filtrar camas ocupadas
-          final ocupadas = camas.where((c) => c.esOcupada && c.internacionId != null).toList();
+          final ocupadas = camas
+              .where((c) => c.esOcupada && c.internacionId != null)
+              .toList();
 
           return lotesAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
@@ -50,11 +53,14 @@ class _PantallaCrearLoteSolicitudState extends ConsumerState<PantallaCrearLoteSo
               }
 
               // Filtrar ocupadas quitando las ya solicitadas
-              final disponibles = ocupadas.where((c) => !yaSolicitadas.contains(c.internacionId!)).toList();
+              final disponibles = ocupadas
+                  .where((c) => !yaSolicitadas.contains(c.internacionId))
+                  .toList();
 
               if (disponibles.isEmpty) {
                 return const Center(
-                  child: Text('No hay nuevos ingresos sin historial solicitado.'),
+                  child:
+                      Text('No hay nuevos ingresos sin historial solicitado.'),
                 );
               }
 
@@ -65,18 +71,20 @@ class _PantallaCrearLoteSolicitudState extends ConsumerState<PantallaCrearLoteSo
                   final pacienteNombre = cama.pacienteNombre ?? 'Desconocido';
                   final internacionId = cama.internacionId!;
                   final isSelected = _seleccionadas.contains(internacionId);
-                  
+
                   final iniciales = pacienteNombre.isNotEmpty
                       ? pacienteNombre[0].toUpperCase()
                       : '?';
 
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
                       child: Text(iniciales),
                     ),
                     title: Text(pacienteNombre),
-                    subtitle: Text('Cama: ${cama.codigo} • Matrícula: ${cama.matricula ?? 'S/N'}'),
+                    subtitle: Text(
+                        'Cama: ${cama.codigo} • Matrícula: ${cama.matricula ?? 'S/N'}'),
                     trailing: Checkbox(
                       value: isSelected,
                       onChanged: (val) {

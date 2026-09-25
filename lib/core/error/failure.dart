@@ -7,7 +7,7 @@
 /// donde `message` puede ser un **string** (regla de negocio rechazada) o un
 /// **array de strings** (uno por campo, cuando falla la validación del DTO).
 /// Esa distinción importa para la UI y por eso vive en el tipo, no en el texto.
-sealed class Failure {
+sealed class Failure implements Exception {
   const Failure(this.mensaje);
 
   /// Mensaje listo para mostrar. Nunca es la excepción cruda.
@@ -17,7 +17,7 @@ sealed class Failure {
   String get sugerencia;
 
   @override
-  String toString() => '$runtimeType: $mensaje';
+  String toString() => mensaje;
 }
 
 /// Sin conexión, DNS caído, timeout. El servidor nunca contestó.

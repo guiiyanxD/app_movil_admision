@@ -160,8 +160,7 @@ class _FilaCampo extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: CheckboxListTile(
         value: campo.aceptado,
-        onChanged: (valor) =>
-            alAlternar(campo.campo, aceptado: valor ?? false),
+        onChanged: (valor) => alAlternar(campo.campo, aceptado: valor ?? false),
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           campo.campo.etiqueta,
@@ -193,13 +192,13 @@ class _FilaCampo extends StatelessWidget {
               ],
             ),
             if (campo.esSobrescritura)
-              _Etiqueta(
+              const _Etiqueta(
                 icono: Icons.edit_note,
                 color: TemaApp.advertencia,
                 texto: 'Reemplaza un valor que ya habías cargado',
               ),
             if (campo.confianzaBaja)
-              _Etiqueta(
+              const _Etiqueta(
                 icono: Icons.help_outline,
                 color: TemaApp.error,
                 texto: 'Reconocimiento poco confiable. Verificá antes de '
@@ -235,10 +234,8 @@ class _Etiqueta extends StatelessWidget {
           Expanded(
             child: Text(
               texto,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(color: color),
+              style:
+                  Theme.of(context).textTheme.bodySmall?.copyWith(color: color),
             ),
           ),
         ],
@@ -262,8 +259,11 @@ class _NoReconocidos extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.report_gmailerrorred,
-                size: 20, color: TemaApp.advertencia),
+            const Icon(
+              Icons.report_gmailerrorred,
+              size: 20,
+              color: TemaApp.advertencia,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

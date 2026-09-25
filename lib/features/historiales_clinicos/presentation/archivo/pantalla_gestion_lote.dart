@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PantallaGestionLote extends ConsumerWidget {
-  const PantallaGestionLote({super.key, required this.loteId});
+  const PantallaGestionLote({required this.loteId, super.key});
 
   final String loteId;
 
@@ -16,11 +16,15 @@ class PantallaGestionLote extends ConsumerWidget {
       (previous, next) {
         if (next.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${next.error}'), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text('Error: ${next.error}'),
+                backgroundColor: Colors.red),
           );
         } else if (!next.isLoading && previous?.isLoading == true) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Operación exitosa'), backgroundColor: Colors.green),
+            const SnackBar(
+                content: Text('Operación exitosa'),
+                backgroundColor: Colors.green),
           );
         }
       },
@@ -37,7 +41,8 @@ class PantallaGestionLote extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Error: $err')),
         data: (lotes) {
           final lote = lotes.firstWhere((l) => l.id == loteId);
-          final pendientes = lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
+          final pendientes =
+              lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
           final puedeNotificar = pendientes == 0 && lote.estado != 'NOTIFIED';
 
           return Column(
@@ -48,80 +53,117 @@ class PantallaGestionLote extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final sol = lote.solicitudes[index];
                     final paciente = sol.paciente;
-                    final iniciales = (paciente != null && paciente.nombres.isNotEmpty)
+                    final iniciales = (paciente != null &&
+                            paciente.nombres.isNotEmpty)
                         ? '${paciente.nombres[0]}${paciente.apellidoPaterno.isNotEmpty ? paciente.apellidoPaterno[0] : ''}'
                         : '?';
 
                     return Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
                                 child: Text(iniciales.toUpperCase()),
                               ),
-                              title: Text(paciente?.nombreCompleto ?? 'Desconocido'),
-                              subtitle: Text('Cama: ${sol.camaCodigo ?? 'S/N'} • Matrícula: ${paciente?.matricula ?? 'S/N'}\nEstado: ${TraductorEstados.traducir(sol.estado)}'),
+                              title: Text(
+                                  paciente?.nombreCompleto ?? 'Desconocido'),
+                              subtitle: Text(
+                                  'Cama: ${sol.camaCodigo ?? 'S/N'} • Matrícula: ${paciente?.matricula ?? 'S/N'}\nEstado: ${TraductorEstados.traducir(sol.estado)}'),
                             ),
-                            if (sol.estado == 'REQUESTED' || sol.estado == 'NOT_FOUND' || sol.estado == 'LENT' || sol.estado == 'READY') ...[
+                            if (sol.estado == 'REQUESTED' ||
+                                sol.estado == 'NOT_FOUND' ||
+                                sol.estado == 'LENT' ||
+                                sol.estado == 'READY') ...[
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 12),
                                 child: Divider(height: 1),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: FilledButton.tonalIcon(
-                                      onPressed: sol.estado == 'READY' ? null : () async {
-                                        await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(sol.id, 'READY');
-                                      },
+                                      onPressed: sol.estado == 'READY'
+                                          ? null
+                                          : () async {
+                                              await ref
+                                                  .read(
+                                                      historialesControllerProvider
+                                                          .notifier)
+                                                  .actualizarEstadoArchivo(
+                                                      sol.id, 'READY');
+                                            },
                                       style: FilledButton.styleFrom(
-                                        backgroundColor: Colors.green.withValues(alpha: 0.15),
+                                        backgroundColor: Colors.green
+                                            .withValues(alpha: 0.15),
                                         foregroundColor: Colors.green.shade800,
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
                                       ),
                                       icon: const Icon(Icons.check, size: 18),
-                                      label: const Text('Listo', style: TextStyle(fontSize: 13)),
+                                      label: const Text('Listo',
+                                          style: TextStyle(fontSize: 13)),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: FilledButton.tonalIcon(
-                                      onPressed: sol.estado == 'LENT' ? null : () async {
-                                        await _mostrarDialogoPrestado(context, ref, sol.id);
-                                      },
+                                      onPressed: sol.estado == 'LENT'
+                                          ? null
+                                          : () async {
+                                              await _mostrarDialogoPrestado(
+                                                  context, ref, sol.id);
+                                            },
                                       style: FilledButton.styleFrom(
-                                        backgroundColor: Colors.orange.withValues(alpha: 0.15),
+                                        backgroundColor: Colors.orange
+                                            .withValues(alpha: 0.15),
                                         foregroundColor: Colors.orange.shade800,
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
                                       ),
-                                      icon: const Icon(Icons.handshake_outlined, size: 18),
-                                      label: const Text('Prestar', style: TextStyle(fontSize: 13)),
+                                      icon: const Icon(Icons.handshake_outlined,
+                                          size: 18),
+                                      label: const Text('Prestar',
+                                          style: TextStyle(fontSize: 13)),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: FilledButton.tonalIcon(
-                                      onPressed: sol.estado == 'NOT_FOUND' ? null : () async {
-                                        await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(sol.id, 'NOT_FOUND');
-                                      },
+                                      onPressed: sol.estado == 'NOT_FOUND'
+                                          ? null
+                                          : () async {
+                                              await ref
+                                                  .read(
+                                                      historialesControllerProvider
+                                                          .notifier)
+                                                  .actualizarEstadoArchivo(
+                                                      sol.id, 'NOT_FOUND');
+                                            },
                                       style: FilledButton.styleFrom(
-                                        backgroundColor: Colors.red.withValues(alpha: 0.15),
+                                        backgroundColor:
+                                            Colors.red.withValues(alpha: 0.15),
                                         foregroundColor: Colors.red.shade800,
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
                                       ),
                                       icon: const Icon(Icons.close, size: 18),
-                                      label: const Text('No Enc.', style: TextStyle(fontSize: 13)),
+                                      label: const Text('No Enc.',
+                                          style: TextStyle(fontSize: 13)),
                                     ),
                                   ),
                                 ],
                               ),
-                            ]
+                            ],
                           ],
                         ),
                       ),
@@ -137,24 +179,34 @@ class PantallaGestionLote extends ConsumerWidget {
                   child: FilledButton(
                     onPressed: puedeNotificar
                         ? () async {
-                            await ref.read(historialesControllerProvider.notifier).notificarLote(lote.id);
+                            await ref
+                                .read(historialesControllerProvider.notifier)
+                                .notificarLote(lote.id);
                             if (context.mounted) {
-                              final texto = 'Tus historias clinicas solicitadas en el lote ${lote.id.substring(0, 5).toUpperCase()} estan listas para ser recogidas';
-                              final uri = Uri.parse('whatsapp://send?text=${Uri.encodeComponent(texto)}');
+                              final texto =
+                                  'Tus historias clinicas solicitadas en el lote ${lote.id.substring(0, 5).toUpperCase()} estan listas para ser recogidas';
+                              final uri = Uri.parse(
+                                  'whatsapp://send?text=${Uri.encodeComponent(texto)}');
                               if (await canLaunchUrl(uri)) {
                                 await launchUrl(uri);
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('No se pudo abrir WhatsApp.')),
-                                );
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('No se pudo abrir WhatsApp.')),
+                                  );
+                                }
                               }
-                              Navigator.of(context).pop();
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
+                              }
                             }
                           }
                         : null,
                     child: const Text('Notificar a Admisión'),
                   ),
-                )
+                ),
             ],
           );
         },
@@ -162,21 +214,27 @@ class PantallaGestionLote extends ConsumerWidget {
     );
   }
 
-  Future<void> _mostrarDialogoPrestado(BuildContext context, WidgetRef ref, String solicitudId) async {
+  Future<void> _mostrarDialogoPrestado(
+      BuildContext context, WidgetRef ref, String solicitudId) async {
     final controller = TextEditingController();
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Marcar como prestado'),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(labelText: 'Nota (A quién se prestó, etc.)'),
+          decoration: const InputDecoration(
+              labelText: 'Nota (A quién se prestó, etc.)'),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancelar')),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Cancelar')),
           FilledButton(
             onPressed: () async {
-              await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(
+              await ref
+                  .read(historialesControllerProvider.notifier)
+                  .actualizarEstadoArchivo(
                     solicitudId,
                     'LENT',
                     notasArchivo: controller.text,

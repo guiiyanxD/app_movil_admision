@@ -1,10 +1,8 @@
 import 'package:app_movil/features/internaciones/domain/entities/cama_tablero.dart';
 import 'package:app_movil/features/internaciones/presentation/pages/pantalla_detalle_internacion.dart';
-import 'package:app_movil/features/internaciones/presentation/widgets/estilos_cama.dart';
 import 'package:app_movil/features/internaciones/presentation/pages/pantalla_mover_cama.dart';
-import 'package:app_movil/features/internaciones/presentation/pages/revision_ingreso_hc2_page.dart';
-import 'package:app_movil/features/internaciones/presentation/providers/tablero_camas_providers.dart';
 import 'package:app_movil/features/internaciones/presentation/widgets/bottom_sheet_cambiar_estado.dart';
+import 'package:app_movil/features/internaciones/presentation/widgets/estilos_cama.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -88,8 +86,11 @@ class DetalleCamaBottomSheet extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(estilo.icono,
-                          size: 13, color: estilo.colorPrincipal,),
+                      Icon(
+                        estilo.icono,
+                        size: 13,
+                        color: estilo.colorPrincipal,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         estilo.etiqueta,
@@ -218,11 +219,12 @@ class DetalleCamaBottomSheet extends StatelessWidget {
               _FilaDetalle(
                 icono: Icons.info_outline,
                 titulo: 'Estado de la cama',
-                valor: cama.motivoEstado != null && cama.motivoEstado!.isNotEmpty
-                    ? cama.motivoEstado!
-                    : (cama.estadoBase == 'disponible' 
-                        ? 'Cama lista y disponible para ingreso.' 
-                        : 'Cama ${cama.estadoBase}'),
+                valor:
+                    cama.motivoEstado != null && cama.motivoEstado!.isNotEmpty
+                        ? cama.motivoEstado!
+                        : (cama.estadoBase == 'disponible'
+                            ? 'Cama lista y disponible para ingreso.'
+                            : 'Cama ${cama.estadoBase}'),
               ),
             ],
 

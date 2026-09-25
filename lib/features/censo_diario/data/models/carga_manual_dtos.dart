@@ -1,4 +1,3 @@
-library;
 import 'package:app_movil/features/censo_diario/domain/entities/cama_prestada.dart';
 import 'package:app_movil/features/censo_diario/domain/entities/censo_servicio.dart';
 import 'package:app_movil/features/censo_diario/domain/entities/progreso_dia.dart';
@@ -6,7 +5,6 @@ import 'package:app_movil/features/censo_diario/domain/entities/tipo_movimiento_
 import 'package:app_movil/features/censo_diario/domain/value_objects/fecha_censo.dart';
 
 /// DTOs de carga manual del censo diario.
-
 
 /// Cuerpo de `POST /censo-diario/carga-manual`.
 class GuardarCargaManualDto {
@@ -38,9 +36,8 @@ class GuardarCargaManualDto {
       aislamiento: censo.aislamiento,
       libre: censo.libre,
       total: censo.total,
-      camasPrestadas: censo.camasPrestadas
-          .map(CamaPrestadaDto.fromDomain)
-          .toList(),
+      camasPrestadas:
+          censo.camasPrestadas.map(CamaPrestadaDto.fromDomain).toList(),
     );
   }
 
@@ -106,8 +103,7 @@ class CamaPrestadaDto {
         especialidadId:
             (json['especialidad_id'] ?? json['especialidadId']) as String,
         cantidad: (json['cantidad'] as num).toInt(),
-        tipoIngreso:
-            (json['tipo_ingreso'] ?? json['tipoIngreso']) as String,
+        tipoIngreso: (json['tipo_ingreso'] ?? json['tipoIngreso']) as String,
       );
 
   final String especialidadId;
@@ -160,10 +156,12 @@ class CargaManualGuardadaDto {
     }
 
     final fechaRaw = (json['fecha'] ?? json['fecha_censo'])?.toString() ?? '';
-    final fecha = fechaRaw.isNotEmpty ? DateTime.parse(fechaRaw) : DateTime.now();
+    final fecha =
+        fechaRaw.isNotEmpty ? DateTime.parse(fechaRaw) : DateTime.now();
 
-    final servicioId = (json['servicioId'] ?? json['servicio_id'])?.toString() ?? '';
-    final id = (json['id']?.toString()) ?? servicioId;
+    final servicioId =
+        (json['servicioId'] ?? json['servicio_id'])?.toString() ?? '';
+    final id = json['id']?.toString() ?? servicioId;
 
     final camas = json['camasPrestadas'] ?? json['camas_prestadas'];
 
@@ -221,7 +219,8 @@ class CargaManualGuardadaDto {
         aislamiento: aislamiento,
         libre: libre,
         total: total,
-        camasPrestadas: camasPrestadas.isNotEmpty ? camasPrestadas : this.camasPrestadas,
+        camasPrestadas:
+            camasPrestadas.isNotEmpty ? camasPrestadas : this.camasPrestadas,
       );
 }
 

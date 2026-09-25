@@ -45,8 +45,7 @@ class PropuestaVoz {
   bool get esComando => comando != null;
 
   bool get tieneDudas =>
-      fragmentosNoReconocidos.isNotEmpty ||
-      campos.any((c) => c.confianzaBaja);
+      fragmentosNoReconocidos.isNotEmpty || campos.any((c) => c.confianzaBaja);
 
   /// Solo los campos que el usuario dejó marcados.
   List<CampoPropuesto> get aceptados =>

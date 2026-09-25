@@ -46,7 +46,7 @@ void main() {
     registerFallbackValue(DateTime.now());
     registerFallbackValue(
       RangoFechas(
-        inicio: DateTime(2026, 1, 1),
+        inicio: DateTime(2026),
         fin: DateTime(2026, 1, 31),
       ),
     );

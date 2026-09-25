@@ -1,9 +1,8 @@
+import 'package:app_movil/features/censo_diario/domain/entities/servicio.dart';
+import 'package:app_movil/features/censo_diario/presentation/pages/censo_servicio_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:app_movil/app/tema.dart';
-import 'package:app_movil/features/censo_diario/domain/entities/servicio.dart';
-import 'package:app_movil/features/censo_diario/presentation/pages/censo_servicio_form_page.dart';
 
 /// Vista mensual de un servicio: permite recorrer y cargar los 30 o 31 días
 /// del mes día por día para ese único servicio físico.
@@ -27,12 +26,28 @@ class ProgresoMesServicioPage extends ConsumerStatefulWidget {
 class _ProgresoMesServicioPageState
     extends ConsumerState<ProgresoMesServicioPage> {
   static const _nombresMeses = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
   ];
 
   static const _nombresDiasSemana = [
-    'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo',
+    'Lunes',
+    'Martes',
+    'Miércoles',
+    'Jueves',
+    'Viernes',
+    'Sábado',
+    'Domingo',
   ];
 
   late final List<DateTime> _todosLosDias;
@@ -154,9 +169,8 @@ class _ProgresoMesServicioPageState
                   ),
                   const SizedBox(height: 16),
                   FilledButton.icon(
-                    onPressed: _diasCargables.isNotEmpty
-                        ? () => _abrirDia(0)
-                        : null,
+                    onPressed:
+                        _diasCargables.isNotEmpty ? () => _abrirDia(0) : null,
                     icon: const Icon(Icons.play_arrow),
                     label: Text(
                       _diasCargables.isNotEmpty
@@ -198,12 +212,14 @@ class _ProgresoMesServicioPageState
               child: Card(
                 elevation: 0,
                 color: esFuturo
-                    ? tema.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
+                    ? tema.colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.3)
                     : tema.colorScheme.surfaceContainerLow,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
-                    color: tema.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                    color:
+                        tema.colorScheme.outlineVariant.withValues(alpha: 0.5),
                   ),
                 ),
                 child: ListTile(

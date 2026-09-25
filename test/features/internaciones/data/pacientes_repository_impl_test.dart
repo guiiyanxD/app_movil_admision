@@ -30,7 +30,6 @@ class _PacientesRemoteDataSourceFalso implements PacientesRemoteDataSource {
           matricula: '19525414DSE',
           fechaNacimiento: params.fechaNacimiento,
           sexo: params.sexo,
-
           tipoPaciente: params.tipoPaciente,
           empresaAseguradora: params.empresaAseguradora,
           regional: params.regional,
@@ -48,7 +47,8 @@ void main() {
   });
 
   group('PacientesRepositoryImpl', () {
-    test('buscarPorMatricula retorna Exito con paciente cuando existe', () async {
+    test('buscarPorMatricula retorna Exito con paciente cuando existe',
+        () async {
       final paciente = Paciente(
         id: 'p-1',
         nombres: 'ELIZABETH',

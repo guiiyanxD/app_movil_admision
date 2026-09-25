@@ -177,7 +177,7 @@ void main() {
   group('obtenerTotalDiaAnterior', () {
     test('consulta el día ANTERIOR al seleccionado', () async {
       await repositorio.obtenerTotalDiaAnterior(
-        fecha: DateTime(2026, 6, 1),
+        fecha: DateTime(2026, 6),
         nombreVaciado: 'Medicina Interna',
       );
 
@@ -219,7 +219,7 @@ void main() {
       ];
 
       final resultado = await repositorio.obtenerTotalDiaAnterior(
-        fecha: DateTime(2026, 6, 1),
+        fecha: DateTime(2026, 6),
         nombreVaciado: 'Medicina Interna',
       );
 
@@ -288,7 +288,7 @@ void main() {
 
   group('guardarCensoServicio', () {
     final censo = CensoServicio(
-      fecha: DateTime(2026, 6, 1),
+      fecha: DateTime(2026, 6),
       servicioId: 'a',
       ingreso: 3,
       egreso: 2,
@@ -313,8 +313,8 @@ void main() {
     });
 
     test('conserva las camas prestadas que el backend no devuelve', () async {
-      final guardado = (await repositorio.guardarCensoServicio(censo))
-          .valorONulo!;
+      final guardado =
+          (await repositorio.guardarCensoServicio(censo)).valorONulo!;
 
       // La respuesta de staging no trae las camas prestadas, pero el backend
       // acaba de reemplazarlas por exactamente las que se enviaron.
@@ -329,7 +329,7 @@ void main() {
         'message': 'El censo no cuadra para: Medicina Interna',
       });
 
-      final resultado = await repositorio.obtenerProgresoDia(DateTime(2026, 6, 1));
+      final resultado = await repositorio.obtenerProgresoDia(DateTime(2026, 6));
 
       expect(resultado.esFallo, isTrue);
       expect(resultado.fallaONula, isA<FallaReglaDeNegocio>());
@@ -340,7 +340,7 @@ void main() {
         'message': 'Esta fecha ya tiene un cierre automático real',
       });
 
-      final resultado = await repositorio.confirmarDia(DateTime(2026, 6, 1));
+      final resultado = await repositorio.confirmarDia(DateTime(2026, 6));
 
       expect(resultado.fallaONula, isA<FallaAutorizacion>());
     });
@@ -356,8 +356,7 @@ void main() {
       expect(resultado.fallaONula, isA<FallaRed>());
     });
 
-    test('una respuesta con forma inesperada no se confunde con red',
-        () async {
+    test('una respuesta con forma inesperada no se confunde con red', () async {
       falso.excepcionAlLlamar = const FormatException('Se esperaba una lista');
 
       final resultado = await repositorio.obtenerServiciosActivos();

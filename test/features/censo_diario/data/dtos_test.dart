@@ -130,7 +130,7 @@ void main() {
 
   group('GuardarCargaManualDto — cuerpo del POST', () {
     CensoServicio censoBase() => CensoServicio(
-          fecha: DateTime(2026, 6, 1),
+          fecha: DateTime(2026, 6),
           servicioId: '3fa1-uuid',
           ingreso: 3,
           egreso: 2,

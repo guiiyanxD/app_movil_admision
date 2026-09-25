@@ -62,8 +62,9 @@ typedef ReporteArmado = ({
 ///
 /// Lanza la `Failure` tal cual para que la pantalla la muestre con su
 /// sugerencia y un botón de reintento (CA-12).
-final reporteProvider = FutureProvider.autoDispose
-    .family<ReporteArmado, ConsultaReporte>((ref, consulta) async {
+final AutoDisposeFutureProviderFamily<ReporteArmado, ConsultaReporte>
+    reporteProvider = FutureProvider.autoDispose
+        .family<ReporteArmado, ConsultaReporte>((ref, consulta) async {
   // Las dependencias se leen antes de cualquier `await`: después del primero el
   // provider puede haber sido descartado y `ref` deja de ser seguro.
   final repositorio = ref.watch(reporteriaRepositoryProvider);

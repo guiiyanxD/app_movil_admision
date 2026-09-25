@@ -45,8 +45,14 @@ class _PantallaPruebaPdfState extends State<PantallaPruebaPdf> {
   /// Los nombres van con tilde a propósito: son los del catálogo propio, no los
   /// de vaciado-admisión. Y el `−` de la última fila es el signo menos
   /// tipográfico que ya usa `PanelSaldoEsperado`.
-  static const _encabezados = ['Período', 'Medicina Interna', 'Pediatría',
-      'Neonatología', 'Ginecología', 'Total'];
+  static const _encabezados = [
+    'Período',
+    'Medicina Interna',
+    'Pediatría',
+    'Neonatología',
+    'Ginecología',
+    'Total',
+  ];
 
   static const _filas = [
     ['2026-07-16', '4', '2', '1', '3', '10'],
@@ -74,7 +80,7 @@ class _PantallaPruebaPdfState extends State<PantallaPruebaPdf> {
             pw.SizedBox(height: 4),
             pw.Text(
               'Prueba de toolchain · Ingresos por servicio',
-              style: pw.TextStyle(fontSize: 11, color: _azulMarca),
+              style: const pw.TextStyle(fontSize: 11, color: _azulMarca),
             ),
             pw.SizedBox(height: 12),
             _tabla(),
@@ -129,9 +135,8 @@ class _PantallaPruebaPdfState extends State<PantallaPruebaPdf> {
         ),
         for (var i = 0; i < _filas.length; i++)
           pw.TableRow(
-            decoration: i.isOdd
-                ? const pw.BoxDecoration(color: _filaAlterna)
-                : null,
+            decoration:
+                i.isOdd ? const pw.BoxDecoration(color: _filaAlterna) : null,
             children: [
               for (final valor in _filas[i]) celda(valor, esEncabezado: false),
             ],

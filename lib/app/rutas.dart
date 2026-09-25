@@ -26,7 +26,7 @@ abstract final class Rutas {
   static const String pruebaPdf = '/diagnostico/pdf';
   static const String reporteCenso = '/reporteria/censo';
   static const String tableroCamas = '/internaciones/tablero';
-  
+
   static const String solicitarHistoriales = '/historiales/solicitar';
   static const String recepcionHistoriales = '/historiales/recepcion';
   static const String dashboardArchivo = '/historiales/archivo/dashboard';
@@ -61,9 +61,12 @@ abstract final class Rutas {
 
   static Widget _aTableroCamas(BuildContext _) => const TableroCamasPage();
 
-  static Widget _aSolicitarHistoriales(BuildContext _) => const PantallaCrearLoteSolicitud();
-  
-  static Widget _aRecepcionHistoriales(BuildContext _) => const PantallaDashboardRecepcion();
-  
-  static Widget _aDashboardArchivo(BuildContext _) => const PantallaDashboardArchivo();
+  static Widget _aSolicitarHistoriales(BuildContext _) =>
+      const PantallaCrearLoteSolicitud();
+
+  static Widget _aRecepcionHistoriales(BuildContext _) =>
+      const PantallaDashboardRecepcion();
+
+  static Widget _aDashboardArchivo(BuildContext _) =>
+      const PantallaDashboardArchivo();
 }

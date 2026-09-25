@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Cómo se agrupan los períodos del reporte.
 ///
 /// Se traduce al parámetro `detalle` del API, que en el backend decide el
@@ -19,6 +21,7 @@ enum AgrupacionReporte {
 /// Se valida antes de salir a la red: un rango invertido o incompleto no es un
 /// error del servidor, y hacerle pagar un viaje de red al operador para
 /// devolverle una lista vacía sería confundir "no hay datos" con "pediste mal".
+@immutable
 class RangoFechas {
   factory RangoFechas({
     required DateTime inicio,

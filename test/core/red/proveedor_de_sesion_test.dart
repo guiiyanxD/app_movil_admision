@@ -127,7 +127,8 @@ void main() {
       expect(InterceptorSesion.esRutaDeAuth('/auth/login'), isTrue);
       expect(InterceptorSesion.esRutaDeAuth('/auth/refresh'), isTrue);
       expect(InterceptorSesion.esRutaDeAuth('/censo-diario/estado'), isFalse);
-      expect(InterceptorSesion.esRutaDeAuth('/reporteria/censo-mensual'), isFalse);
+      expect(
+          InterceptorSesion.esRutaDeAuth('/reporteria/censo-mensual'), isFalse);
     });
   });
 

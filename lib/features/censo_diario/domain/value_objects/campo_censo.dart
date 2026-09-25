@@ -21,7 +21,8 @@ enum CampoCenso {
     // La etiqueta impresa quedó desactualizada: ahí se anotan los egresos
     // directos. Se muestra para que el operador ubique la fila en el papel,
     // pero NO se usa como rótulo del campo (ADR-0005, D-3).
-    ayudaFormulario: 'en el formulario: fila «Ingresos y egresos del mismo día»',
+    ayudaFormulario:
+        'en el formulario: fila «Ingresos y egresos del mismo día»',
   ),
   egresoTraslado(
     campoApi: 'egresoTraslado',
@@ -70,6 +71,5 @@ enum CampoCenso {
   final String ayudaFormulario;
 
   /// `true` si el campo cuenta camas en lugar de movimientos de paciente.
-  bool get esCama =>
-      this == aislamiento || this == bloqueada || this == libre;
+  bool get esCama => this == aislamiento || this == bloqueada || this == libre;
 }

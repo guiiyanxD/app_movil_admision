@@ -135,7 +135,8 @@ class _SelectorServidorModalState extends ConsumerState<SelectorServidorModal> {
                   title: Text(
                     ambiente.nombre,
                     style: TextStyle(
-                      fontWeight: esSeleccionado ? FontWeight.bold : FontWeight.normal,
+                      fontWeight:
+                          esSeleccionado ? FontWeight.bold : FontWeight.normal,
                       fontSize: 14,
                     ),
                   ),
@@ -186,12 +187,14 @@ class _SelectorServidorModalState extends ConsumerState<SelectorServidorModal> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.network_check_rounded, size: 20),
-              label: Text(probando ? 'Probando conexión...' : 'Probar conexión ahora'),
+              label: Text(
+                  probando ? 'Probando conexión...' : 'Probar conexión ahora'),
             ),
             if (resultado != null) ...[
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   color: resultado.exitoso
                       ? TemaApp.exito.withOpacity(0.1)
@@ -217,7 +220,8 @@ class _SelectorServidorModalState extends ConsumerState<SelectorServidorModal> {
                             ? 'Conexión exitosa (${resultado.latenciaMs} ms)'
                             : resultado.mensaje,
                         style: TextStyle(
-                          color: resultado.exitoso ? TemaApp.exito : TemaApp.error,
+                          color:
+                              resultado.exitoso ? TemaApp.exito : TemaApp.error,
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
@@ -236,9 +240,10 @@ class _SelectorServidorModalState extends ConsumerState<SelectorServidorModal> {
               onPressed: () async {
                 await ref.read(gestorServidorProvider.notifier).cambiarServidor(
                       ambiente: _seleccionado,
-                      urlPersonalizada: _seleccionado == AmbienteServidor.personalizado
-                          ? _urlPersonalizadaCtrl.text.trim()
-                          : null,
+                      urlPersonalizada:
+                          _seleccionado == AmbienteServidor.personalizado
+                              ? _urlPersonalizadaCtrl.text.trim()
+                              : null,
                     );
                 if (context.mounted) {
                   Navigator.of(context).pop();

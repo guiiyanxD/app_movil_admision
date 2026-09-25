@@ -9,7 +9,6 @@ class CrearPacienteParams {
     required this.fechaNacimiento,
     required this.sexo,
     this.apellidoMaterno,
-
     this.tipoPaciente = 'asegurado',
     this.documentoTipo,
     this.documentoNumero,
@@ -44,7 +43,6 @@ class CrearPacienteParams {
           'apellidoMaterno': apellidoMaterno,
         'fechaNacimiento': fechaNacimiento.toIso8601String().split('T').first,
         'sexo': sexo,
-
         'tipoPaciente': tipoPaciente,
         if (documentoTipo != null && documentoTipo!.isNotEmpty)
           'documentoTipo': documentoTipo,

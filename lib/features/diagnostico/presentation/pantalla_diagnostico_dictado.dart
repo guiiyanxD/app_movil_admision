@@ -1,9 +1,9 @@
 import 'package:app_movil/app/tema.dart';
 import 'package:app_movil/app/widgets/panel_escucha_activa.dart';
-import 'package:app_movil/features/diagnostico/domain/bateria_dictado.dart';
 import 'package:app_movil/core/voz/servicio_dictado.dart';
 import 'package:app_movil/core/voz/voz_providers.dart';
 import 'package:app_movil/features/censo_diario/domain/usecases/interpretar_dictado_censo.dart';
+import 'package:app_movil/features/diagnostico/domain/bateria_dictado.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -147,9 +147,8 @@ class _PantallaDiagnosticoDictadoState
   Future<void> _copiar() async {
     final texto = _resumen.comoTexto(
       locale: _servicio.localeSeleccionada,
-      dispositivo: _dispositivo.text.trim().isEmpty
-          ? null
-          : _dispositivo.text.trim(),
+      dispositivo:
+          _dispositivo.text.trim().isEmpty ? null : _dispositivo.text.trim(),
     );
 
     await Clipboard.setData(ClipboardData(text: texto));
@@ -174,9 +173,8 @@ class _PantallaDiagnosticoDictadoState
             tooltip: 'Copiar informe',
           ),
           IconButton(
-            onPressed: _intentos.isEmpty
-                ? null
-                : () => setState(_intentos.clear),
+            onPressed:
+                _intentos.isEmpty ? null : () => setState(_intentos.clear),
             icon: const Icon(Icons.restart_alt),
             tooltip: 'Reiniciar corrida',
           ),

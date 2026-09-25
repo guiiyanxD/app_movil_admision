@@ -1,6 +1,6 @@
-import 'package:app_movil/app/widgets/selector_servidor_modal.dart';
 import 'package:app_movil/app/rutas.dart';
 import 'package:app_movil/app/tema.dart';
+import 'package:app_movil/app/widgets/selector_servidor_modal.dart';
 import 'package:app_movil/core/config/config_providers.dart';
 import 'package:app_movil/features/auth/presentation/auth_providers.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +134,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               autofillHints: const [AutofillHints.username],
                               decoration: const InputDecoration(
                                 labelText: 'Correo electrónico',
-                                prefixIcon: Icon(Icons.alternate_email, size: 20),
+                                prefixIcon:
+                                    Icon(Icons.alternate_email, size: 20),
                               ),
                               validator: (valor) {
                                 final texto = valor?.trim() ?? '';
@@ -251,7 +252,8 @@ class _DestinoActivo extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: tema.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          color:
+              tema.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: TemaApp.semilla.withValues(alpha: 0.3),

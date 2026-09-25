@@ -1,10 +1,13 @@
 import 'package:app_movil/features/reporteria/domain/entities/movimiento_reporte.dart';
 
+import 'package:meta/meta.dart';
+
 /// Una fila de `GET /reporteria/censo-mensual`: un período y un servicio.
 ///
 /// `servicio` es el nombre de **vaciado-admisión**, no el del catálogo propio.
 /// Vienen sin tildes (`Pediatria`, `Neonatologia`) porque así están en
 /// `public.censo`. Cruzarlos con el catálogo local exige pasar por el mapeo.
+@immutable
 class FilaReporteCenso {
   const FilaReporteCenso({
     required this.periodo,
@@ -50,8 +53,7 @@ class FilaReporteCenso {
       other is FilaReporteCenso &&
           other.periodo == periodo &&
           other.servicio == servicio &&
-          MovimientoReporte.values
-              .every((m) => other.valorDe(m) == valorDe(m));
+          MovimientoReporte.values.every((m) => other.valorDe(m) == valorDe(m));
 
   @override
   int get hashCode => Object.hash(

@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Roles del sistema.
 ///
 /// `lectura` no puede escribir carga manual. La app lo detecta al iniciar
@@ -31,6 +33,7 @@ enum RolUsuario {
       };
 }
 
+@immutable
 class UsuarioSesion {
   const UsuarioSesion({
     required this.id,

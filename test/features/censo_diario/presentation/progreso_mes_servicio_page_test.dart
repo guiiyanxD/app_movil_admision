@@ -153,7 +153,7 @@ void main() {
       (tester) async {
     final repo = _RepoFalso();
     final fechas = [
-      DateTime.utc(2026, 7, 1),
+      DateTime.utc(2026, 7),
       DateTime.utc(2026, 7, 2),
       DateTime.utc(2026, 7, 3),
     ];
@@ -169,7 +169,6 @@ void main() {
           home: CensoServicioFormPage.porDias(
             servicio: _servicioTest,
             fechas: fechas,
-            indiceInicial: 0,
           ),
         ),
       ),

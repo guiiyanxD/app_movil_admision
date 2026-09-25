@@ -49,12 +49,14 @@ class PantallaDetalleInternacion extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Text(
                   error.toString(),
-                  style: tema.textTheme.bodySmall?.copyWith(color: esquema.onSurfaceVariant),
+                  style: tema.textTheme.bodySmall
+                      ?.copyWith(color: esquema.onSurfaceVariant),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
                 FilledButton.tonalIcon(
-                  onPressed: () => ref.refresh(internacionDetalleProvider(internacionId)),
+                  onPressed: () =>
+                      ref.refresh(internacionDetalleProvider(internacionId)),
                   icon: const Icon(Icons.refresh),
                   label: const Text('Reintentar'),
                 ),
@@ -154,7 +156,9 @@ class _CabeceraPaciente extends StatelessWidget {
           Row(
             children: [
               Icon(
-                esMasculino ? Icons.male : (esFemenino ? Icons.female : Icons.person),
+                esMasculino
+                    ? Icons.male
+                    : (esFemenino ? Icons.female : Icons.person),
                 color: colorTexto,
                 size: 28,
               ),
@@ -178,30 +182,36 @@ class _CabeceraPaciente extends StatelessWidget {
               _DatoBasico(
                 icono: Icons.cake_outlined,
                 etiqueta: 'Edad',
-                valor: paciente.edad != null ? '${paciente.edad} años' : 'No reg.',
+                valor:
+                    paciente.edad != null ? '${paciente.edad} años' : 'No reg.',
                 color: colorTexto,
               ),
               _DatoBasico(
                 icono: Icons.wc_outlined,
                 etiqueta: 'Sexo',
-                valor: paciente.sexo != null 
-                    ? paciente.sexo![0].toUpperCase() + paciente.sexo!.substring(1).toLowerCase() 
+                valor: paciente.sexo != null
+                    ? paciente.sexo![0].toUpperCase() +
+                        paciente.sexo!.substring(1).toLowerCase()
                     : 'No especificado',
                 color: colorTexto,
               ),
               _DatoBasico(
                 icono: Icons.badge_outlined,
                 etiqueta: 'Matrícula',
-                valor: (paciente.matricula != null && paciente.matricula!.isNotEmpty)
+                valor: (paciente.matricula != null &&
+                        paciente.matricula!.isNotEmpty)
                     ? paciente.matricula!
                     : 'No informada',
                 color: colorTexto,
               ),
-              if (paciente.documentoNumero != null && paciente.documentoNumero!.isNotEmpty)
+              if (paciente.documentoNumero != null &&
+                  paciente.documentoNumero!.isNotEmpty)
                 _DatoBasico(
                   icono: Icons.credit_card_outlined,
                   etiqueta: 'Documento',
-                  valor: '${paciente.documentoNumero} ${paciente.documentoTipo ?? ""}'.trim(),
+                  valor:
+                      '${paciente.documentoNumero} ${paciente.documentoTipo ?? ""}'
+                          .trim(),
                   color: colorTexto,
                 ),
             ],
@@ -331,24 +341,27 @@ class _TarjetaInformacionIngreso extends StatelessWidget {
             _FilaInfoInternacion(
               icono: Icons.family_restroom_outlined,
               titulo: 'Familiar Responsable',
-              valor: (detalle.familiarReferenciaNombre == null || detalle.familiarReferenciaNombre!.isEmpty) 
-                  ? 'Sin información' 
+              valor: (detalle.familiarReferenciaNombre == null ||
+                      detalle.familiarReferenciaNombre!.isEmpty)
+                  ? 'Sin información'
                   : detalle.familiarReferenciaNombre!,
             ),
             const SizedBox(height: 12),
             _FilaInfoInternacion(
               icono: Icons.phone_outlined,
               titulo: 'Teléfono',
-              valor: (detalle.familiarReferenciaTelefono == null || detalle.familiarReferenciaTelefono!.isEmpty) 
-                  ? 'Sin información' 
+              valor: (detalle.familiarReferenciaTelefono == null ||
+                      detalle.familiarReferenciaTelefono!.isEmpty)
+                  ? 'Sin información'
                   : detalle.familiarReferenciaTelefono!,
             ),
             const SizedBox(height: 12),
             _FilaInfoInternacion(
               icono: Icons.location_on_outlined,
               titulo: 'Dirección',
-              valor: (detalle.familiarReferenciaDireccion == null || detalle.familiarReferenciaDireccion!.isEmpty) 
-                  ? 'Sin información' 
+              valor: (detalle.familiarReferenciaDireccion == null ||
+                      detalle.familiarReferenciaDireccion!.isEmpty)
+                  ? 'Sin información'
                   : detalle.familiarReferenciaDireccion!,
             ),
           ],
@@ -431,7 +444,8 @@ class _TimelineTraslados extends StatelessWidget {
         itemCount: bedStaysDesc.length,
         itemBuilder: (context, index) {
           final stay = bedStaysDesc[index];
-          final esActual = index == 0; // El primero en la lista descendente es el actual
+          final esActual =
+              index == 0; // El primero en la lista descendente es el actual
 
           return SizedBox(
             width: 260,
@@ -446,14 +460,18 @@ class _TimelineTraslados extends StatelessWidget {
                       Container(
                         width: 16,
                         height: 2,
-                        color: index == 0 ? Colors.transparent : esquema.outlineVariant,
+                        color: index == 0
+                            ? Colors.transparent
+                            : esquema.outlineVariant,
                       ),
                       Container(
                         width: 16,
                         height: 16,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: esActual ? esquema.primary : esquema.surfaceContainerHighest,
+                          color: esActual
+                              ? esquema.primary
+                              : esquema.surfaceContainerHighest,
                           border: Border.all(
                             color: esActual ? esquema.primary : esquema.outline,
                             width: 2,
@@ -463,7 +481,9 @@ class _TimelineTraslados extends StatelessWidget {
                       Expanded(
                         child: Container(
                           height: 2,
-                          color: index == bedStaysDesc.length - 1 ? Colors.transparent : esquema.outlineVariant,
+                          color: index == bedStaysDesc.length - 1
+                              ? Colors.transparent
+                              : esquema.outlineVariant,
                         ),
                       ),
                     ],
@@ -478,7 +498,8 @@ class _TimelineTraslados extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: esActual
                             ? esquema.primaryContainer.withValues(alpha: 0.3)
-                            : esquema.surfaceContainerHighest.withValues(alpha: 0.2),
+                            : esquema.surfaceContainerHighest
+                                .withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: esActual
@@ -496,13 +517,16 @@ class _TimelineTraslados extends StatelessWidget {
                                   'Cama ${stay.camaCodigo}',
                                   style: tema.textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: esActual ? esquema.primary : esquema.onSurface,
+                                    color: esActual
+                                        ? esquema.primary
+                                        : esquema.onSurface,
                                   ),
                                 ),
                               ),
                               if (esActual)
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 2),
                                   decoration: BoxDecoration(
                                     color: esquema.primary,
                                     borderRadius: BorderRadius.circular(8),
@@ -534,7 +558,8 @@ class _TimelineTraslados extends StatelessWidget {
                           const Spacer(),
                           Row(
                             children: [
-                              Icon(Icons.login_outlined, size: 14, color: esquema.onSurfaceVariant),
+                              Icon(Icons.login_outlined,
+                                  size: 14, color: esquema.onSurfaceVariant),
                               const SizedBox(width: 4),
                               Expanded(
                                 child: Text(
@@ -552,7 +577,8 @@ class _TimelineTraslados extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(Icons.info_outline, size: 14, color: esquema.onSurfaceVariant),
+                                Icon(Icons.info_outline,
+                                    size: 14, color: esquema.onSurfaceVariant),
                                 const SizedBox(width: 4),
                                 Expanded(
                                   child: Text(

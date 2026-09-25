@@ -109,7 +109,8 @@ void main() {
   });
 
   group('CensoServicio — camas prestadas', () {
-    test('las directas se suman para contrastar contra los ingresos (V-10)', () {
+    test('las directas se suman para contrastar contra los ingresos (V-10)',
+        () {
       final censo = muestraDelDieciseisDeJulio().copyWith(
         camasPrestadas: const [
           CamaPrestada(

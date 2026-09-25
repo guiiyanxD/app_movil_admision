@@ -1,4 +1,7 @@
+import 'package:meta/meta.dart';
+
 /// Estado de carga de un servicio dentro de una fecha.
+@immutable
 class ProgresoServicio {
   const ProgresoServicio({
     required this.servicioId,
@@ -32,8 +35,7 @@ class ProgresoServicio {
           other.cuadra == cuadra;
 
   @override
-  int get hashCode =>
-      Object.hash(servicioId, servicioNombre, cargado, cuadra);
+  int get hashCode => Object.hash(servicioId, servicioNombre, cargado, cuadra);
 }
 
 /// Progreso completo de una fecha.

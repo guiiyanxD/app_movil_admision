@@ -1,5 +1,3 @@
-
-library;
 import 'package:app_movil/features/censo_diario/domain/entities/servicio.dart';
 
 /// DTOs de catálogo.
@@ -72,8 +70,7 @@ class MapeoEspecialidadDto {
     return MapeoEspecialidadDto(
       especialidadId: json['especialidad_id'] as String,
       nombreVaciado: json['nombre_vaciado'] as String,
-      especialidadNombre:
-          anidada is Map ? anidada['nombre'] as String? : null,
+      especialidadNombre: anidada is Map ? anidada['nombre'] as String? : null,
     );
   }
 

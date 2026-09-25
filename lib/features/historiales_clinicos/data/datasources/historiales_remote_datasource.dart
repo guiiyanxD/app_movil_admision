@@ -1,5 +1,5 @@
+import 'package:app_movil/features/historiales_clinicos/domain/models/solicitud_historial_model.dart';
 import 'package:dio/dio.dart';
-import '../../domain/models/solicitud_historial_model.dart';
 
 class HistorialesRemoteDataSource {
   const HistorialesRemoteDataSource(this._dio);
@@ -7,7 +7,7 @@ class HistorialesRemoteDataSource {
   final Dio _dio;
 
   Future<LoteSolicitudModel> crearLote(List<String> internacionIds) async {
-    final response = await _dio.post(
+    final response = await _dio.post<Map<String, dynamic>>(
       '/historiales/solicitudes',
       data: {'internacionIds': internacionIds},
     );
@@ -18,7 +18,7 @@ class HistorialesRemoteDataSource {
     String? startDate,
     String? endDate,
   }) async {
-    final response = await _dio.get(
+    final response = await _dio.get<List<dynamic>>(
       '/historiales/solicitudes',
       queryParameters: {
         if (startDate != null) 'startDate': startDate,
@@ -26,7 +26,9 @@ class HistorialesRemoteDataSource {
       },
     );
     final data = response.data as List;
-    return data.map((e) => LoteSolicitudModel.fromJson(e as Map<String, dynamic>)).toList();
+    return data
+        .map((e) => LoteSolicitudModel.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<SolicitudHistorialModel> actualizarEstadoArchivo(
@@ -34,25 +36,28 @@ class HistorialesRemoteDataSource {
     String estado, {
     String? notasArchivo,
   }) async {
-    final response = await _dio.patch(
+    final response = await _dio.patch<Map<String, dynamic>>(
       '/historiales/solicitudes/$id/estado',
       data: {
         'estado': estado,
         if (notasArchivo != null) 'notas_archivo': notasArchivo,
       },
     );
-    return SolicitudHistorialModel.fromJson(response.data as Map<String, dynamic>);
+    return SolicitudHistorialModel.fromJson(
+        response.data as Map<String, dynamic>);
   }
 
   Future<void> notificarLote(String loteId) async {
-    await _dio.post('/historiales/solicitudes/lote/$loteId/notificar');
+    await _dio.post<dynamic>('/historiales/solicitudes/lote/$loteId/notificar');
   }
 
-  Future<SolicitudHistorialModel> actualizarRecepcion(String id, String estado) async {
-    final response = await _dio.patch(
+  Future<SolicitudHistorialModel> actualizarRecepcion(
+      String id, String estado) async {
+    final response = await _dio.patch<Map<String, dynamic>>(
       '/historiales/solicitudes/$id/recepcion',
       data: {'estado': estado},
     );
-    return SolicitudHistorialModel.fromJson(response.data as Map<String, dynamic>);
+    return SolicitudHistorialModel.fromJson(
+        response.data as Map<String, dynamic>);
   }
 }

@@ -91,8 +91,17 @@ class NumeroEsParser {
 
   /// Unidades 1–9, las únicas que pueden ir detrás de una decena redonda.
   static const Set<String> _unidadesTrasDecena = {
-    'uno', 'un', 'una', 'dos', 'tres', 'cuatro',
-    'cinco', 'seis', 'siete', 'ocho', 'nueve',
+    'uno',
+    'un',
+    'una',
+    'dos',
+    'tres',
+    'cuatro',
+    'cinco',
+    'seis',
+    'siete',
+    'ocho',
+    'nueve',
   };
 
   /// `true` si el token puede formar parte de un número.

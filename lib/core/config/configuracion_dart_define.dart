@@ -25,7 +25,6 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
     const url = String.fromEnvironment('API_URL');
     const destino = String.fromEnvironment(
       'API_DESTINO',
-      defaultValue: '',
     );
 
     if (url.trim().isEmpty) {
@@ -37,11 +36,10 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
           'O utiliza tool/correr.ps1',
         );
       }
-      final defecto = AmbienteServidor.equipo;
+      const defecto = AmbienteServidor.equipo;
       return ConfiguracionDartDefine(
         urlBaseApi: defecto.url,
         nombreDestino: destino.isNotEmpty ? destino : defecto.nombre,
-        ambiente: defecto,
       );
     }
 
@@ -60,7 +58,6 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
   @override
   final String nombreDestino;
 
-  @override
   final AmbienteServidor ambiente;
 
   @override
@@ -69,7 +66,6 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
   @override
   final Duration timeoutRespuesta;
 
-  @override
   ConfiguracionDartDefine copiarCon({
     String? urlBaseApi,
     String? nombreDestino,

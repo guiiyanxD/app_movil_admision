@@ -8,7 +8,6 @@ class Paciente {
     required this.fechaNacimiento,
     required this.sexo,
     this.apellidoMaterno,
-
     this.tipoPaciente = 'asegurado',
     this.documentoTipo,
     this.documentoNumero,
@@ -33,7 +32,6 @@ class Paciente {
         (json['fecha_nacimiento'] ?? json['fechaNacimiento']) as String,
       ),
       sexo: (json['sexo'] as String? ?? 'masculino').toLowerCase(),
-
       tipoPaciente: (json['tipo_paciente'] ??
           json['tipoPaciente'] ??
           'asegurado') as String,
@@ -88,7 +86,6 @@ class Paciente {
         'matricula': matricula,
         'fechaNacimiento': fechaNacimiento.toIso8601String().split('T').first,
         'sexo': sexo,
-
         'tipoPaciente': tipoPaciente,
         'documentoTipo': documentoTipo,
         'documentoNumero': documentoNumero,

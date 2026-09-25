@@ -120,8 +120,7 @@ abstract final class BateriaDictado {
     ),
   ];
 
-  static ItemBateria porId(String id) =>
-      items.firstWhere((i) => i.id == id);
+  static ItemBateria porId(String id) => items.firstWhere((i) => i.id == id);
 }
 
 /// Un intento de dictado sobre un ítem, con lo que devolvió el motor.
@@ -220,7 +219,7 @@ class ResumenBateria {
       ..writeln('Fecha: ${DateTime.now().toIso8601String()}')
       ..writeln('Dispositivo: ${dispositivo ?? "sin especificar"}')
       ..writeln('Locale: ${locale ?? "desconocida"}')
-      ..writeln('')
+      ..writeln()
       ..writeln('RESUMEN')
       ..writeln('  Intentos: ${intentos.length}')
       ..writeln(
@@ -233,7 +232,7 @@ class ResumenBateria {
       )
       ..writeln('  Campos inventados: $totalCamposDeMas')
       ..writeln('  Confianza promedio: ${_pct(confianzaPromedio)}')
-      ..writeln('')
+      ..writeln()
       ..writeln('DETALLE');
 
     for (final intento in intentos) {
@@ -255,7 +254,7 @@ class ResumenBateria {
       if (intento.camposDeMas > 0) {
         b.writeln('    ATENCIÓN: ${intento.camposDeMas} campo(s) inventado(s)');
       }
-      b.writeln('');
+      b.writeln();
     }
 
     return b.toString();

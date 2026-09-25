@@ -16,7 +16,8 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
   final MapeadorDeFallas _mapeador;
 
   @override
-  Future<Resultado<LoteSolicitudModel>> crearLote(List<String> internacionIds) async {
+  Future<Resultado<LoteSolicitudModel>> crearLote(
+      List<String> internacionIds) async {
     try {
       final resultado = await _remoto.crearLote(internacionIds);
       return Exito(resultado);
@@ -24,8 +25,6 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
       return Fallo(_mapeador.desdeDio(e));
     } on FormatException catch (e) {
       return Fallo(FallaFormatoInesperado(e.message));
-    } on TypeError catch (e) {
-      return Fallo(FallaFormatoInesperado('Campo con tipo inesperado: $e'));
     }
   }
 
@@ -44,8 +43,6 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
       return Fallo(_mapeador.desdeDio(e));
     } on FormatException catch (e) {
       return Fallo(FallaFormatoInesperado(e.message));
-    } on TypeError catch (e) {
-      return Fallo(FallaFormatoInesperado('Campo con tipo inesperado: $e'));
     }
   }
 
@@ -66,8 +63,6 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
       return Fallo(_mapeador.desdeDio(e));
     } on FormatException catch (e) {
       return Fallo(FallaFormatoInesperado(e.message));
-    } on TypeError catch (e) {
-      return Fallo(FallaFormatoInesperado('Campo con tipo inesperado: $e'));
     }
   }
 
@@ -82,7 +77,8 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
   }
 
   @override
-  Future<Resultado<SolicitudHistorialModel>> actualizarRecepcion(String id, String estado) async {
+  Future<Resultado<SolicitudHistorialModel>> actualizarRecepcion(
+      String id, String estado) async {
     try {
       final resultado = await _remoto.actualizarRecepcion(id, estado);
       return Exito(resultado);
@@ -90,8 +86,6 @@ class HistorialesRepositoryImpl implements HistorialesRepository {
       return Fallo(_mapeador.desdeDio(e));
     } on FormatException catch (e) {
       return Fallo(FallaFormatoInesperado(e.message));
-    } on TypeError catch (e) {
-      return Fallo(FallaFormatoInesperado('Campo con tipo inesperado: $e'));
     }
   }
 }

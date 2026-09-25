@@ -113,7 +113,7 @@ void main() {
       expect(
         () => RangoFechas(
           inicio: DateTime(2026, 7, 31),
-          fin: DateTime(2026, 7, 1),
+          fin: DateTime(2026, 7),
         ),
         throwsA(isA<RangoInvalido>()),
       );
@@ -130,7 +130,7 @@ void main() {
 
     test('cuenta los días con ambos extremos incluidos', () {
       final rango = RangoFechas(
-        inicio: DateTime(2026, 7, 1),
+        inicio: DateTime(2026, 7),
         fin: DateTime(2026, 7, 31),
       );
 
@@ -139,7 +139,7 @@ void main() {
 
     test('detecta si abarca más de un mes', () {
       expect(
-        RangoFechas(inicio: DateTime(2026, 7, 1), fin: DateTime(2026, 7, 31))
+        RangoFechas(inicio: DateTime(2026, 7), fin: DateTime(2026, 7, 31))
             .abarcaVariosMeses,
         isFalse,
       );
@@ -174,7 +174,7 @@ void main() {
     });
 
     final rango = RangoFechas(
-      inicio: DateTime(2026, 7, 1),
+      inicio: DateTime(2026, 7),
       fin: DateTime(2026, 7, 31),
     );
 

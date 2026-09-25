@@ -31,14 +31,14 @@ class ControlesReporte extends StatelessWidget {
     final ayer = hoy.subtract(const Duration(days: 1));
 
     final rangoEsteMes = RangoFechas(
-      inicio: DateTime(ayer.year, ayer.month, 1),
+      inicio: DateTime(ayer.year, ayer.month),
       fin: ayer,
     );
-    final primerDiaMesActual = DateTime(ayer.year, ayer.month, 1);
+    final primerDiaMesActual = DateTime(ayer.year, ayer.month);
     final ultimoDiaMesPasado =
         primerDiaMesActual.subtract(const Duration(days: 1));
     final rangoMesAnterior = RangoFechas(
-      inicio: DateTime(ultimoDiaMesPasado.year, ultimoDiaMesPasado.month, 1),
+      inicio: DateTime(ultimoDiaMesPasado.year, ultimoDiaMesPasado.month),
       fin: ultimoDiaMesPasado,
     );
 
@@ -186,7 +186,8 @@ class ControlesReporte extends StatelessWidget {
               initialValue: movimiento,
               decoration: const InputDecoration(
                 labelText: 'Movimiento visible en pantalla',
-                helperText: 'El archivo PDF exportado incluye los ocho movimientos.',
+                helperText:
+                    'El archivo PDF exportado incluye los ocho movimientos.',
                 prefixIcon: Icon(Icons.filter_list),
               ),
               items: [

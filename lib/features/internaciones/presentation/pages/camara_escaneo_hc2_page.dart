@@ -146,7 +146,9 @@ class _CamaraEscaneoHC2PageState extends ConsumerState<CamaraEscaneoHC2Page>
   }
 
   Future<String> _recortarImagenAlVisor(
-      String imagePath, Size screenSize,) async {
+    String imagePath,
+    Size screenSize,
+  ) async {
     try {
       final file = File(imagePath);
       final bytes = await file.readAsBytes();

@@ -96,9 +96,8 @@ class _ProgresoDiaPageState extends ConsumerState<ProgresoDiaPage> {
     }).toList();
 
     // Siguiente servicio pendiente para acción de 1 tap
-    final siguientePendiente = progreso.pendientes.isNotEmpty
-        ? progreso.pendientes.first
-        : null;
+    final siguientePendiente =
+        progreso.pendientes.isNotEmpty ? progreso.pendientes.first : null;
 
     return RefreshIndicator(
       onRefresh: () async => refrescarTodo(),
@@ -201,8 +200,11 @@ class _ProgresoDiaPageState extends ConsumerState<ProgresoDiaPage> {
                 const SizedBox(width: 8),
                 if (progreso.desbalanceados.isNotEmpty) ...[
                   FilterChip(
-                    avatar: const Icon(Icons.warning_amber,
-                        size: 16, color: TemaApp.error),
+                    avatar: const Icon(
+                      Icons.warning_amber,
+                      size: 16,
+                      color: TemaApp.error,
+                    ),
                     label: Text(
                       'No cuadran (${progreso.desbalanceados.length})',
                       style: TextStyle(
@@ -328,8 +330,9 @@ class _HeroProgressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Theme.of(context);
-    final fraccion =
-        progreso.total == 0 ? 0.0 : (progreso.listos / progreso.total).clamp(0.0, 1.0);
+    final fraccion = progreso.total == 0
+        ? 0.0
+        : (progreso.listos / progreso.total).clamp(0.0, 1.0);
     final porcentaje = (fraccion * 100).toInt();
 
     return Card(
@@ -515,7 +518,8 @@ class _FilaServicio extends StatelessWidget {
                         ),
                         if (sinMapeo) ...[
                           const SizedBox(width: 6),
-                          const Text('·', style: TextStyle(color: TemaApp.advertencia)),
+                          const Text('·',
+                              style: TextStyle(color: TemaApp.advertencia)),
                           const SizedBox(width: 6),
                           const Text(
                             'sin mapeo',
@@ -678,7 +682,7 @@ class _Error extends StatelessWidget {
           children: [
             const Icon(Icons.cloud_off, size: 48),
             const SizedBox(height: 12),
-            Text('', textAlign: TextAlign.center),
+            const Text('', textAlign: TextAlign.center),
             const SizedBox(height: 16),
             FilledButton.tonalIcon(
               onPressed: alReintentar,

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 /// Estado del motor de dictado.
@@ -120,6 +119,7 @@ class ServicioDictadoSpeechToText implements ServicioDictado {
   DateTime? _inicioEscucha;
 
   /// Cuándo arrancó la sesión en curso, para el contador de la UI.
+  @override
   DateTime? get inicioEscucha => _inicioEscucha;
 
   /// Silencio por defecto antes de cerrar.
@@ -206,14 +206,12 @@ class ServicioDictadoSpeechToText implements ServicioDictado {
           if (!_entregoResultadoFinal) _alDetenerse?.call();
         }
       },
-      debugLogging: false,
     );
 
     if (!disponible) {
       final tienePermiso = await _motor.hasPermission;
-      _estado = tienePermiso
-          ? EstadoDictado.noDisponible
-          : EstadoDictado.sinPermiso;
+      _estado =
+          tienePermiso ? EstadoDictado.noDisponible : EstadoDictado.sinPermiso;
       _emitir(_estado.descripcion, esError: true);
       return _estado;
     }
@@ -282,7 +280,7 @@ class ServicioDictadoSpeechToText implements ServicioDictado {
 
     await _motor.listen(
       localeId: _localeSeleccionada,
-      onResult: (SpeechRecognitionResult resultado) {
+      onResult: (resultado) {
         // Los parciales se retienen: son lo que se entrega si el operador
         // corta la escucha antes de que el motor decida cerrarla.
         if (resultado.recognizedWords.trim().isNotEmpty) {
@@ -310,7 +308,6 @@ class ServicioDictadoSpeechToText implements ServicioDictado {
         _nivel.add(((nivel + 2) / 12).clamp(0.0, 1.0));
       },
       listenOptions: SpeechListenOptions(
-        partialResults: true,
         cancelOnError: true,
         // Dictado de cifras: enunciados cortos, uno detrás de otro.
         listenMode: ListenMode.dictation,

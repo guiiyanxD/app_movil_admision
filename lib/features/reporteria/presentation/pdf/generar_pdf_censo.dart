@@ -195,9 +195,8 @@ abstract final class GeneradorPdfCenso {
         ),
         for (var i = 0; i < matriz.filas.length; i++)
           pw.TableRow(
-            decoration: i.isOdd
-                ? const pw.BoxDecoration(color: _filaAlterna)
-                : null,
+            decoration:
+                i.isOdd ? const pw.BoxDecoration(color: _filaAlterna) : null,
             children: [
               _celda(matriz.filas[i].periodo, alaIzquierda: true),
               for (final valor in matriz.filas[i].valores) _celda('$valor'),

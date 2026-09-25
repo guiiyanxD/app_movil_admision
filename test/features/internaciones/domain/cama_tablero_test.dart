@@ -45,7 +45,8 @@ void main() {
       expect(cama.estadoVisual, equals(EstadoCamaVisual.ocupada));
     });
 
-    test('cama prestada cuando la especialidad de la estancia difiere de la nativa',
+    test(
+        'cama prestada cuando la especialidad de la estancia difiere de la nativa',
         () {
       final cama = CamaTablero(
         id: 'c-3',
@@ -115,7 +116,8 @@ void main() {
         especialidadNativaId: 'e-1',
         especialidadNombre: 'Medicina Interna',
       );
-      expect(camaAislamiento.estadoVisual, equals(EstadoCamaVisual.aislamiento));
+      expect(
+          camaAislamiento.estadoVisual, equals(EstadoCamaVisual.aislamiento));
     });
   });
 }

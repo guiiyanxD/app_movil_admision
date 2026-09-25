@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:app_movil/app/rutas.dart';
 import 'package:app_movil/app/tema.dart';
 import 'package:app_movil/app/widgets/menu_de_cuenta.dart';
@@ -14,9 +15,9 @@ import 'package:intl/intl.dart';
 /// a los módulos del sistema (Censo Diario, Internaciones, Reportes).
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({
-    super.key,
     required this.onNavegarACenso,
     required this.onNavegarAReportes,
+    super.key,
   });
 
   final VoidCallback onNavegarACenso;
@@ -39,11 +40,21 @@ class DashboardPage extends ConsumerWidget {
       final formato = DateFormat("EEEE, d 'de' MMMM 'de' y", 'es');
       final texto = formato.format(ahora);
       return texto[0].toUpperCase() + texto.substring(1);
-    } catch (_) {
+    } on Object catch (_) {
       // Fallback si la localización no estuviese cargada
       const meses = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre',
       ];
       return '${ahora.day} de ${meses[ahora.month - 1]} de ${ahora.year}';
     }
@@ -247,12 +258,14 @@ class DashboardPage extends ConsumerWidget {
               icono: Icons.folder_shared_outlined,
               colorIcono: Colors.deepOrange,
               titulo: 'Archivo Clínico',
-              descripcion: 'Gestión de solicitudes de historiales clínicos del día.',
+              descripcion:
+                  'Gestión de solicitudes de historiales clínicos del día.',
               etiquetaBadge: 'Pendientes',
               colorBadge: Colors.orange,
-              alPresionar: () => Navigator.of(context).pushNamed(Rutas.dashboardArchivo),
+              alPresionar: () =>
+                  Navigator.of(context).pushNamed(Rutas.dashboardArchivo),
             ),
-          
+
           if (sesion?.rol.name == 'archivo' || sesion?.rol.name == 'admin')
             const SizedBox(height: 12),
 
@@ -262,11 +275,12 @@ class DashboardPage extends ConsumerWidget {
               icono: Icons.library_books_outlined,
               colorIcono: Colors.teal,
               titulo: 'Historiales Clínicos',
-              descripcion: 'Solicitar nuevos historiales a Archivo o recepcionar entregas.',
+              descripcion:
+                  'Solicitar nuevos historiales a Archivo o recepcionar entregas.',
               etiquetaBadge: 'Activo',
               colorBadge: TemaApp.exito,
               alPresionar: () {
-                showModalBottomSheet<void>(
+                unawaited(showModalBottomSheet<void>(
                   context: context,
                   builder: (ctx) => SafeArea(
                     child: Column(
@@ -277,7 +291,8 @@ class DashboardPage extends ConsumerWidget {
                           title: const Text('Solicitar Historiales'),
                           onTap: () {
                             Navigator.pop(ctx);
-                            Navigator.of(context).pushNamed(Rutas.solicitarHistoriales);
+                            unawaited(Navigator.of(context)
+                                .pushNamed(Rutas.solicitarHistoriales));
                           },
                         ),
                         ListTile(
@@ -285,13 +300,14 @@ class DashboardPage extends ConsumerWidget {
                           title: const Text('Recepción de Historiales'),
                           onTap: () {
                             Navigator.pop(ctx);
-                            Navigator.of(context).pushNamed(Rutas.recepcionHistoriales);
+                            unawaited(Navigator.of(context)
+                                .pushNamed(Rutas.recepcionHistoriales));
                           },
                         ),
                       ],
                     ),
                   ),
-                );
+                ));
               },
             ),
 
@@ -432,7 +448,7 @@ class _TarjetaModulo extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          HapticFeedback.selectionClick();
+          unawaited(HapticFeedback.selectionClick());
           alPresionar();
         },
         borderRadius: BorderRadius.circular(16),

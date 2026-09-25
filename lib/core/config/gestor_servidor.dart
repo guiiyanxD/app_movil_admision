@@ -3,6 +3,7 @@ import 'package:app_movil/core/config/configuracion_app.dart';
 import 'package:app_movil/core/config/configuracion_dart_define.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Resultado del diagnóstico de prueba de conexión con el backend.
@@ -39,9 +40,8 @@ class GestorServidorState {
     return GestorServidorState(
       config: config ?? this.config,
       probandoConexion: probandoConexion ?? this.probandoConexion,
-      resultadoPrueba: limpiarResultado
-          ? null
-          : (resultadoPrueba ?? this.resultadoPrueba),
+      resultadoPrueba:
+          limpiarResultado ? null : (resultadoPrueba ?? this.resultadoPrueba),
     );
   }
 }
@@ -51,7 +51,7 @@ class GestorServidorState {
 class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
   GestorServidorNotifier(ConfiguracionApp configInicial)
       : super(GestorServidorState(config: configInicial)) {
-    _cargarGuardado();
+    unawaited(_cargarGuardado());
   }
 
   static const _claveUrl = 'config_api_url_activa';
@@ -73,7 +73,7 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
         );
         state = state.copyWith(config: nuevaConfig);
       }
-    } catch (_) {
+    } on Object catch (_) {
       // Si falla la lectura del almacenamiento seguro, se conserva la config inicial.
     }
   }
@@ -83,10 +83,11 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
     required AmbienteServidor ambiente,
     String? urlPersonalizada,
   }) async {
-    String url = ambiente.url;
-    String nombre = ambiente.nombre;
+    var url = ambiente.url;
+    var nombre = ambiente.nombre;
 
-    if (ambiente == AmbienteServidor.personalizado && urlPersonalizada != null) {
+    if (ambiente == AmbienteServidor.personalizado &&
+        urlPersonalizada != null) {
       url = urlPersonalizada.trim();
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'http://$url';
@@ -108,7 +109,7 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
     try {
       await _almacen.write(key: _claveUrl, value: url);
       await _almacen.write(key: _claveDestino, value: nombre);
-    } catch (_) {}
+    } on Object catch (_) {}
   }
 
   /// Diagnostica conectividad en tiempo real contra una URL específica.
@@ -141,7 +142,7 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
 
     try {
       final urlCompleta = url.endsWith('/') ? '${url}api/v1' : '$url/api/v1';
-      final respuesta = await dio.get(urlCompleta);
+      final respuesta = await dio.get<dynamic>(urlCompleta);
       stopwatch.stop();
 
       final resultado = ResultadoPruebaConexion(
@@ -157,11 +158,12 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
       return resultado;
     } on DioException catch (e) {
       stopwatch.stop();
-      String mensajeError = 'Error de conexión';
+      var mensajeError = 'Error de conexión';
       if (e.type == DioExceptionType.connectionTimeout) {
         mensajeError = 'Tiempo de espera agotado (¿Firewall o IP incorrecta?)';
       } else if (e.type == DioExceptionType.connectionError) {
-        mensajeError = 'No se pudo conectar al host (¿Backend no iniciado o IP inalcanzable?)';
+        mensajeError =
+            'No se pudo conectar al host (¿Backend no iniciado o IP inalcanzable?)';
       } else if (e.response != null) {
         mensajeError = 'Respuesta del servidor: ${e.response?.statusCode}';
       }
@@ -177,7 +179,7 @@ class GestorServidorNotifier extends StateNotifier<GestorServidorState> {
         resultadoPrueba: resultado,
       );
       return resultado;
-    } catch (e) {
+    } on Object catch (e) {
       stopwatch.stop();
       final resultado = ResultadoPruebaConexion(
         exitoso: false,

@@ -1,3 +1,4 @@
+import 'package:app_movil/core/error/failure.dart' show Failure;
 import 'package:app_movil/features/censo_diario/data/models/carga_manual_dtos.dart';
 import 'package:app_movil/features/censo_diario/data/models/catalogo_dtos.dart';
 import 'package:dio/dio.dart';

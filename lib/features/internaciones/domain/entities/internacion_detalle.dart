@@ -14,6 +14,22 @@ class PacienteDetalle {
     this.documentoTipo,
   });
 
+  factory PacienteDetalle.fromJson(Map<String, dynamic> json) {
+    return PacienteDetalle(
+      id: json['id'] as String,
+      nombres: json['nombres'] as String,
+      apellidoPaterno: json['apellido_paterno'] as String?,
+      apellidoMaterno: json['apellido_materno'] as String?,
+      sexo: json['sexo'] as String?,
+      fechaNacimiento: json['fecha_nacimiento'] != null
+          ? DateTime.tryParse(json['fecha_nacimiento'] as String)
+          : null,
+      matricula: json['matricula'] as String?,
+      documentoNumero: json['documento_numero'] as String?,
+      documentoTipo: json['documento_tipo'] as String?,
+    );
+  }
+
   final String id;
   final String nombres;
   final String? apellidoPaterno;
@@ -38,28 +54,13 @@ class PacienteDetalle {
   int? get edad {
     if (fechaNacimiento == null) return null;
     final hoy = DateTime.now();
-    int age = hoy.year - fechaNacimiento!.year;
+    var age = hoy.year - fechaNacimiento!.year;
     if (hoy.month < fechaNacimiento!.month ||
-        (hoy.month == fechaNacimiento!.month && hoy.day < fechaNacimiento!.day)) {
+        (hoy.month == fechaNacimiento!.month &&
+            hoy.day < fechaNacimiento!.day)) {
       age--;
     }
     return age;
-  }
-
-  factory PacienteDetalle.fromJson(Map<String, dynamic> json) {
-    return PacienteDetalle(
-      id: json['id'] as String,
-      nombres: json['nombres'] as String,
-      apellidoPaterno: json['apellido_paterno'] as String?,
-      apellidoMaterno: json['apellido_materno'] as String?,
-      sexo: json['sexo'] as String?,
-      fechaNacimiento: json['fecha_nacimiento'] != null
-          ? DateTime.tryParse(json['fecha_nacimiento'] as String)
-          : null,
-      matricula: json['matricula'] as String?,
-      documentoNumero: json['documento_numero'] as String?,
-      documentoTipo: json['documento_tipo'] as String?,
-    );
   }
 }
 
@@ -73,13 +74,6 @@ class BedStayDetalle {
     required this.especialidadNombre,
     this.motivoCambio,
   });
-
-  final String id;
-  final DateTime creadoEn;
-  final String camaCodigo;
-  final String servicioNombre;
-  final String especialidadNombre;
-  final String? motivoCambio;
 
   factory BedStayDetalle.fromJson(Map<String, dynamic> json) {
     final cama = json['cama'] as Map<String, dynamic>? ?? {};
@@ -95,13 +89,19 @@ class BedStayDetalle {
       motivoCambio: json['motivo_cambio'] as String?,
     );
   }
+
+  final String id;
+  final DateTime creadoEn;
+  final String camaCodigo;
+  final String servicioNombre;
+  final String especialidadNombre;
+  final String? motivoCambio;
 }
 
 @immutable
 class InternacionDetalle {
   const InternacionDetalle({
     required this.id,
-    this.numeroHc2,
     required this.fechaIngreso,
     required this.viaIngreso,
     required this.estadoHc,
@@ -109,11 +109,37 @@ class InternacionDetalle {
     required this.diagnosticoInicial,
     required this.paciente,
     required this.bedStays,
+    this.numeroHc2,
     this.responsablePago,
     this.familiarReferenciaNombre,
     this.familiarReferenciaTelefono,
     this.familiarReferenciaDireccion,
   });
+
+  factory InternacionDetalle.fromJson(Map<String, dynamic> json) {
+    return InternacionDetalle(
+      id: json['id'] as String,
+      numeroHc2: json['numero_hc2'] as int?,
+      fechaIngreso: DateTime.parse(json['fecha_ingreso'] as String),
+      viaIngreso: json['via_ingreso'] as String? ?? 'Desconocida',
+      estadoHc: json['estado_hc'] as String? ?? 'Desconocido',
+      medicoTratante: json['medico_tratante'] as String? ?? 'No especificado',
+      diagnosticoInicial:
+          json['diagnostico_inicial'] as String? ?? 'No especificado',
+      responsablePago: json['responsable_pago'] as String?,
+      familiarReferenciaNombre: json['familiar_referencia_nombre'] as String?,
+      familiarReferenciaTelefono:
+          json['familiar_referencia_telefono'] as String?,
+      familiarReferenciaDireccion:
+          json['familiar_referencia_direccion'] as String?,
+      paciente:
+          PacienteDetalle.fromJson(json['paciente'] as Map<String, dynamic>),
+      bedStays: (json['bedStays'] as List<dynamic>?)
+              ?.map((e) => BedStayDetalle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+  }
 
   final String id;
   final int? numeroHc2;
@@ -126,28 +152,7 @@ class InternacionDetalle {
   final String? familiarReferenciaNombre;
   final String? familiarReferenciaTelefono;
   final String? familiarReferenciaDireccion;
-  
+
   final PacienteDetalle paciente;
   final List<BedStayDetalle> bedStays;
-
-  factory InternacionDetalle.fromJson(Map<String, dynamic> json) {
-    return InternacionDetalle(
-      id: json['id'] as String,
-      numeroHc2: json['numero_hc2'] as int?,
-      fechaIngreso: DateTime.parse(json['fecha_ingreso'] as String),
-      viaIngreso: json['via_ingreso'] as String? ?? 'Desconocida',
-      estadoHc: json['estado_hc'] as String? ?? 'Desconocido',
-      medicoTratante: json['medico_tratante'] as String? ?? 'No especificado',
-      diagnosticoInicial: json['diagnostico_inicial'] as String? ?? 'No especificado',
-      responsablePago: json['responsable_pago'] as String?,
-      familiarReferenciaNombre: json['familiar_referencia_nombre'] as String?,
-      familiarReferenciaTelefono: json['familiar_referencia_telefono'] as String?,
-      familiarReferenciaDireccion: json['familiar_referencia_direccion'] as String?,
-      paciente: PacienteDetalle.fromJson(json['paciente'] as Map<String, dynamic>),
-      bedStays: (json['bedStays'] as List<dynamic>?)
-              ?.map((e) => BedStayDetalle.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-  }
 }

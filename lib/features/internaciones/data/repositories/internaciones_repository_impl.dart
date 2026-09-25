@@ -1,8 +1,8 @@
 import 'package:app_movil/core/error/failure.dart';
-import 'package:app_movil/features/internaciones/domain/entities/internacion_detalle.dart';
 import 'package:app_movil/core/error/mapeador_de_fallas.dart';
 import 'package:app_movil/core/error/resultado.dart';
 import 'package:app_movil/features/internaciones/data/datasources/internaciones_remote_datasource.dart';
+import 'package:app_movil/features/internaciones/domain/entities/internacion_detalle.dart';
 import 'package:app_movil/features/internaciones/domain/repositories/internaciones_repository.dart';
 import 'package:dio/dio.dart';
 
@@ -49,10 +49,12 @@ class InternacionesRepositoryImpl implements InternacionesRepository {
       // ignore: avoid_catching_errors, error runtime
     } on TypeError catch (e) {
       return Fallo(
-        FallaFormatoInesperado('Campo con tipo inesperado al parsear detalle: $e'),
+        FallaFormatoInesperado(
+            'Campo con tipo inesperado al parsear detalle: $e'),
       );
     }
   }
+
   @override
   Future<Resultado<void>> trasladarInterno(MoverCamaParams params) async {
     try {

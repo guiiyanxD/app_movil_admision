@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PantallaRecepcionHistoriales extends ConsumerWidget {
-  const PantallaRecepcionHistoriales({super.key, required this.loteId});
+  const PantallaRecepcionHistoriales({required this.loteId, super.key});
 
   final String loteId;
 
@@ -19,7 +19,7 @@ class PantallaRecepcionHistoriales extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => ref.invalidate(lotesDelDiaProvider),
-          )
+          ),
         ],
       ),
       body: lotesAsync.when(
@@ -29,10 +29,16 @@ class PantallaRecepcionHistoriales extends ConsumerWidget {
           // Filtrar los lotes que Archivo ya gestionó (NOTIFIED) o que tienen solicitudes en estado READY o DISCREPANCY, etc.
           // Para esta pantalla, nos interesan las solicitudes que Archivo marcó como READY, NOT_FOUND, LENT
           // que necesitan ser recepcionadas o validadas.
-          final lote = lotes.firstWhere((l) => l.id == loteId, orElse: () => throw Exception('Lote no encontrado'));
-          
+          final lote = lotes.firstWhere((l) => l.id == loteId,
+              orElse: () => throw Exception('Lote no encontrado'));
+
           final solicitudesParaRecibir = lote.solicitudes
-              .where((sol) => sol.estado == 'READY' || sol.estado == 'RECEIVED' || sol.estado == 'DISCREPANCY' || sol.estado == 'NOT_FOUND' || sol.estado == 'LENT')
+              .where((sol) =>
+                  sol.estado == 'READY' ||
+                  sol.estado == 'RECEIVED' ||
+                  sol.estado == 'DISCREPANCY' ||
+                  sol.estado == 'NOT_FOUND' ||
+                  sol.estado == 'LENT')
               .toList();
 
           if (solicitudesParaRecibir.isEmpty) {
@@ -46,14 +52,15 @@ class PantallaRecepcionHistoriales extends ConsumerWidget {
             itemBuilder: (context, index) {
               final sol = solicitudesParaRecibir[index];
               final paciente = sol.paciente;
-              final iniciales = (paciente != null && paciente.nombres.isNotEmpty)
+              final iniciales = (paciente != null &&
+                      paciente.nombres.isNotEmpty)
                   ? '${paciente.nombres[0]}${paciente.apellidoPaterno.isNotEmpty ? paciente.apellidoPaterno[0] : ''}'
                   : '?';
 
               // Icono / Color de estado actual
-              IconData icono = Icons.help_outline;
+              var icono = Icons.help_outline;
               Color color = Colors.grey;
-              
+
               if (sol.estado == 'READY') {
                 icono = Icons.check_circle_outline;
                 color = Colors.orange;
@@ -70,17 +77,19 @@ class PantallaRecepcionHistoriales extends ConsumerWidget {
 
               return Dismissible(
                 key: Key(sol.id),
-                direction: sol.estado == 'READY' 
-                    ? DismissDirection.horizontal 
+                direction: sol.estado == 'READY'
+                    ? DismissDirection.horizontal
                     : DismissDirection.none,
                 confirmDismiss: (direction) async {
                   if (direction == DismissDirection.endToStart) {
                     // Swipe Izquierda (Rojo) - Discrepancia
-                    await ref.read(historialesControllerProvider.notifier)
+                    await ref
+                        .read(historialesControllerProvider.notifier)
                         .actualizarRecepcion(sol.id, 'DISCREPANCY');
                   } else if (direction == DismissDirection.startToEnd) {
                     // Swipe Derecha (Verde) - Recibido
-                    await ref.read(historialesControllerProvider.notifier)
+                    await ref
+                        .read(historialesControllerProvider.notifier)
                         .actualizarRecepcion(sol.id, 'RECEIVED');
                   }
                   return false; // El provider refrescará la lista automáticamente
@@ -99,11 +108,13 @@ class PantallaRecepcionHistoriales extends ConsumerWidget {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     child: Text(iniciales.toUpperCase()),
                   ),
                   title: Text(paciente?.nombreCompleto ?? 'Desconocido'),
-                  subtitle: Text('Cama: ${sol.camaCodigo ?? 'S/N'} • Estado: ${TraductorEstados.traducir(sol.estado)}'),
+                  subtitle: Text(
+                      'Cama: ${sol.camaCodigo ?? 'S/N'} • Estado: ${TraductorEstados.traducir(sol.estado)}'),
                   trailing: Icon(icono, color: color),
                 ),
               );

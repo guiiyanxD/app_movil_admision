@@ -1,7 +1,7 @@
 import 'package:app_movil/features/historiales_clinicos/domain/models/solicitud_historial_model.dart';
 import 'package:app_movil/features/historiales_clinicos/domain/repositories/historiales_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Inyección del repositorio (se sobreescribe en bootstrap.dart).
 final historialesRepositoryProvider = Provider<HistorialesRepository>((ref) {
@@ -12,7 +12,8 @@ final historialesRepositoryProvider = Provider<HistorialesRepository>((ref) {
 final rangoFechasLotesProvider = StateProvider<DateTimeRange?>((ref) => null);
 
 /// Lista de lotes
-final lotesDelDiaProvider = AutoDisposeFutureProvider<List<LoteSolicitudModel>>((ref) async {
+final lotesDelDiaProvider =
+    AutoDisposeFutureProvider<List<LoteSolicitudModel>>((ref) async {
   final repo = ref.watch(historialesRepositoryProvider);
   final rango = ref.watch(rangoFechasLotesProvider);
 
@@ -24,7 +25,8 @@ final lotesDelDiaProvider = AutoDisposeFutureProvider<List<LoteSolicitudModel>>(
     endDate = rango.end.toIso8601String().split('T').first;
   }
 
-  final resultado = await repo.obtenerLotes(startDate: startDate, endDate: endDate);
+  final resultado =
+      await repo.obtenerLotes(startDate: startDate, endDate: endDate);
   return resultado.fold(
     (falla) => throw Exception(falla.mensaje),
     (lotes) => lotes,
@@ -32,8 +34,10 @@ final lotesDelDiaProvider = AutoDisposeFutureProvider<List<LoteSolicitudModel>>(
 });
 
 /// Proveedor para manejar acciones mutables en Historiales (Admisión y Archivo).
-final historialesControllerProvider =
-    StateNotifierProvider.autoDispose<HistorialesController, AsyncValue<void>>((ref) {
+final AutoDisposeStateNotifierProvider<HistorialesController, AsyncValue<void>>
+    historialesControllerProvider =
+    StateNotifierProvider.autoDispose<HistorialesController, AsyncValue<void>>(
+        (ref) {
   return HistorialesController(ref.watch(historialesRepositoryProvider), ref);
 });
 

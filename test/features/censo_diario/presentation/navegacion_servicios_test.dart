@@ -168,14 +168,13 @@ void main() {
     test('cambiar las camas prestadas también cuenta como cambio', () async {
       await llenarCensoValido();
       await logica.guardar();
-      logica
-        ..reemplazarCamasPrestadas(const [
-          CamaPrestada(
-            especialidadId: 'esp-1',
-            cantidad: 1,
-            tipoIngreso: TipoIngresoCamaPrestada.directo,
-          ),
-        ]);
+      logica.reemplazarCamasPrestadas(const [
+        CamaPrestada(
+          especialidadId: 'esp-1',
+          cantidad: 1,
+          tipoIngreso: TipoIngresoCamaPrestada.directo,
+        ),
+      ]);
 
       expect(logica.estado.hayCambiosSinGuardar, isTrue);
     });

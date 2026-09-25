@@ -119,17 +119,15 @@ class CensoFormState {
       !tieneVozPendiente &&
       !validaciones.hayBloqueantes;
 
-  bool get cuadra =>
-      capacidad != null && censo.cuadraCon(capacidad!);
+  bool get cuadra => capacidad != null && censo.cuadraCon(capacidad!);
 
   /// Diferencia entre la suma de estados de cama y la capacidad. `null` si no
   /// se conoce la capacidad.
   int? get desvioDeCuadre =>
       capacidad == null ? null : censo.sumaEstadosCama - capacidad!;
 
-  int? get saldoEsperado => totalDiaAnterior == null
-      ? null
-      : censo.saldoEsperado(totalDiaAnterior!);
+  int? get saldoEsperado =>
+      totalDiaAnterior == null ? null : censo.saldoEsperado(totalDiaAnterior!);
 
   /// Camas libres deducidas de la capacidad, o `null` si no corresponde
   /// ofrecerlas.
@@ -176,14 +174,14 @@ class CensoFormState {
       capacidad: capacidad ?? this.capacidad,
       totalDiaAnterior: totalDiaAnterior ?? this.totalDiaAnterior,
       validaciones: validaciones ?? this.validaciones,
-      propuestaPendiente:
-          limpiarPropuesta ? null : propuestaPendiente ?? this.propuestaPendiente,
+      propuestaPendiente: limpiarPropuesta
+          ? null
+          : propuestaPendiente ?? this.propuestaPendiente,
       falla: limpiarFalla ? null : falla ?? this.falla,
       censoPersistido: censoPersistido ?? this.censoPersistido,
       cargaPrevia: cargaPrevia ?? this.cargaPrevia,
       falloLecturaPrevia: falloLecturaPrevia ?? this.falloLecturaPrevia,
-      transcripcionParcial:
-          transcripcionParcial ?? this.transcripcionParcial,
+      transcripcionParcial: transcripcionParcial ?? this.transcripcionParcial,
     );
   }
 }

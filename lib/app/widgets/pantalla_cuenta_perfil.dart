@@ -1,4 +1,3 @@
-import 'package:app_movil/app/widgets/selector_servidor_modal.dart';
 import 'package:app_movil/app/rutas.dart';
 import 'package:app_movil/app/tema.dart';
 import 'package:app_movil/core/config/config_providers.dart';
@@ -112,7 +111,8 @@ class PantallaCuentaPerfil extends ConsumerWidget {
                     child: const Icon(Icons.mic, size: 20),
                   ),
                   title: const Text('Diagnóstico de Dictado por Voz'),
-                  subtitle: const Text('Calibrar y medir precisión de voz (es-BO)'),
+                  subtitle:
+                      const Text('Calibrar y medir precisión de voz (es-BO)'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     HapticFeedback.selectionClick();
@@ -127,7 +127,8 @@ class PantallaCuentaPerfil extends ConsumerWidget {
                     child: const Icon(Icons.picture_as_pdf, size: 20),
                   ),
                   title: const Text('Prueba de Generación PDF'),
-                  subtitle: const Text('Verificar render y fuentes del reporte impreso'),
+                  subtitle: const Text(
+                      'Verificar render y fuentes del reporte impreso'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     HapticFeedback.selectionClick();

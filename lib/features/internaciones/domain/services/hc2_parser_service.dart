@@ -334,7 +334,7 @@ class HC2ParserService {
     String? camaCodigo;
     if (camaCodigoRaw != null) {
       var cleaned = camaCodigoRaw.replaceAll(RegExp(r'\s+'), '');
-      cleaned = cleaned.replaceFirst(RegExp(r'^[A-Z]*0*'), '');
+      cleaned = cleaned.replaceFirst(RegExp('^[A-Z]*0*'), '');
       if (cleaned.isNotEmpty) {
         camaCodigo = cleaned;
       }

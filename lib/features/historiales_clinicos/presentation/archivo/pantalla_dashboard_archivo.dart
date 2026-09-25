@@ -18,8 +18,18 @@ class PantallaDashboardArchivo extends ConsumerWidget {
       return texto[0].toUpperCase() + texto.substring(1);
     } catch (_) {
       const meses = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre',
       ];
       return '${ahora.day} de ${meses[ahora.month - 1]} de ${ahora.year}';
     }
@@ -37,11 +47,15 @@ class PantallaDashboardArchivo extends ConsumerWidget {
       (previous, next) {
         if (next.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${next.error}'), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text('Error: ${next.error}'),
+                backgroundColor: Colors.red),
           );
         } else if (!next.isLoading && previous?.isLoading == true) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Operación exitosa'), backgroundColor: Colors.green),
+            const SnackBar(
+                content: Text('Operación exitosa'),
+                backgroundColor: Colors.green),
           );
         }
       },
@@ -104,7 +118,8 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                             Row(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
                                     color: Colors.white.withValues(alpha: 0.2),
                                     borderRadius: BorderRadius.circular(20),
@@ -112,11 +127,15 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Icon(Icons.folder_shared_outlined, size: 14, color: Colors.white),
+                                      const Icon(Icons.folder_shared_outlined,
+                                          size: 14, color: Colors.white),
                                       const SizedBox(width: 6),
                                       Text(
                                         'Archivo Central',
-                                        style: tema.textTheme.labelSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                                        style: tema.textTheme.labelSmall
+                                            ?.copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),
@@ -143,20 +162,24 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                             const SizedBox(height: 14),
                             Row(
                               children: [
-                                Icon(Icons.calendar_today_outlined, size: 14, color: Colors.white.withValues(alpha: 0.8)),
+                                Icon(Icons.calendar_today_outlined,
+                                    size: 14,
+                                    color: Colors.white.withValues(alpha: 0.8)),
                                 const SizedBox(width: 6),
                                 Text(
                                   _obtenerFechaFormateada(),
-                                  style: tema.textTheme.bodySmall?.copyWith(color: Colors.white.withValues(alpha: 0.85)),
+                                  style: tema.textTheme.bodySmall?.copyWith(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.85)),
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      
+
                       const SizedBox(height: 24),
-                      
+
                       // ── Acceso Directo a Lotes ──────────────────────────
                       Text(
                         'Gestión',
@@ -170,12 +193,15 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
-                          side: BorderSide(color: esquema.outlineVariant.withValues(alpha: 0.6)),
+                          side: BorderSide(
+                              color: esquema.outlineVariant
+                                  .withValues(alpha: 0.6)),
                         ),
                         child: InkWell(
                           onTap: () {
                             HapticFeedback.selectionClick();
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PantallaLotesArchivo()));
+                            Navigator.of(context).push(MaterialPageRoute<void>(
+                                builder: (_) => const PantallaLotesArchivo()));
                           },
                           borderRadius: BorderRadius.circular(16),
                           child: Padding(
@@ -189,16 +215,19 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                     color: Colors.blue.withValues(alpha: 0.12),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: const Icon(Icons.history_edu_outlined, color: Colors.blue, size: 26),
+                                  child: const Icon(Icons.history_edu_outlined,
+                                      color: Colors.blue, size: 26),
                                 ),
                                 const SizedBox(width: 14),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Lotes y Recepciones',
-                                        style: tema.textTheme.titleSmall?.copyWith(
+                                        style:
+                                            tema.textTheme.titleSmall?.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: esquema.onSurface,
                                         ),
@@ -206,12 +235,17 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                       const SizedBox(height: 4),
                                       Text(
                                         'Ver el historial completo de solicitudes y notificar a Admisión.',
-                                        style: tema.textTheme.bodySmall?.copyWith(color: esquema.onSurfaceVariant),
+                                        style: tema.textTheme.bodySmall
+                                            ?.copyWith(
+                                                color:
+                                                    esquema.onSurfaceVariant),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Icon(Icons.chevron_right, color: esquema.onSurfaceVariant.withValues(alpha: 0.5)),
+                                Icon(Icons.chevron_right,
+                                    color: esquema.onSurfaceVariant
+                                        .withValues(alpha: 0.5)),
                               ],
                             ),
                           ),
@@ -232,15 +266,22 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: solicitudesPendientes.isEmpty ? Colors.green.withValues(alpha: 0.1) : Colors.orange.withValues(alpha: 0.1),
+                              color: solicitudesPendientes.isEmpty
+                                  ? Colors.green.withValues(alpha: 0.1)
+                                  : Colors.orange.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              solicitudesPendientes.isEmpty ? 'Al día' : '${solicitudesPendientes.length} por procesar',
+                              solicitudesPendientes.isEmpty
+                                  ? 'Al día'
+                                  : '${solicitudesPendientes.length} por procesar',
                               style: tema.textTheme.labelSmall?.copyWith(
-                                color: solicitudesPendientes.isEmpty ? Colors.green.shade800 : Colors.orange.shade800,
+                                color: solicitudesPendientes.isEmpty
+                                    ? Colors.green.shade800
+                                    : Colors.orange.shade800,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -261,16 +302,19 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                     child: Center(
                       child: Column(
                         children: [
-                          Icon(Icons.check_circle_outline, size: 64, color: Colors.green.shade300),
+                          Icon(Icons.check_circle_outline,
+                              size: 64, color: Colors.green.shade300),
                           const SizedBox(height: 16),
                           Text(
                             '¡Excelente trabajo!',
-                            style: tema.textTheme.titleMedium?.copyWith(color: esquema.onSurface),
+                            style: tema.textTheme.titleMedium
+                                ?.copyWith(color: esquema.onSurface),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             'No hay historias pendientes en este momento.',
-                            style: tema.textTheme.bodyMedium?.copyWith(color: esquema.onSurfaceVariant),
+                            style: tema.textTheme.bodyMedium
+                                ?.copyWith(color: esquema.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -283,17 +327,21 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                     (context, index) {
                       final sol = solicitudesPendientes[index];
                       final paciente = sol.paciente;
-                      final iniciales = (paciente != null && paciente.nombres.isNotEmpty)
+                      final iniciales = (paciente != null &&
+                              paciente.nombres.isNotEmpty)
                           ? '${paciente.nombres[0]}${paciente.apellidoPaterno.isNotEmpty ? paciente.apellidoPaterno[0] : ''}'
                           : '?';
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 6),
                         child: Card(
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(color: esquema.outlineVariant.withValues(alpha: 0.6)),
+                            side: BorderSide(
+                                color: esquema.outlineVariant
+                                    .withValues(alpha: 0.6)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(16),
@@ -305,34 +353,55 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                     CircleAvatar(
                                       radius: 22,
                                       backgroundColor: esquema.primaryContainer,
-                                      foregroundColor: esquema.onPrimaryContainer,
-                                      child: Text(iniciales.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                                      foregroundColor:
+                                          esquema.onPrimaryContainer,
+                                      child: Text(iniciales.toUpperCase(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            paciente?.nombreCompleto ?? 'Desconocido',
-                                            style: tema.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                                            paciente?.nombreCompleto ??
+                                                'Desconocido',
+                                            style: tema.textTheme.titleSmall
+                                                ?.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                           ),
                                           const SizedBox(height: 4),
                                           Wrap(
-                                            crossAxisAlignment: WrapCrossAlignment.center,
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.center,
                                             children: [
-                                              Icon(Icons.badge_outlined, size: 14, color: esquema.onSurfaceVariant),
+                                              Icon(Icons.badge_outlined,
+                                                  size: 14,
+                                                  color:
+                                                      esquema.onSurfaceVariant),
                                               const SizedBox(width: 4),
                                               Text(
                                                 paciente?.matricula ?? 'S/N',
-                                                style: tema.textTheme.bodySmall?.copyWith(color: esquema.onSurfaceVariant),
+                                                style: tema.textTheme.bodySmall
+                                                    ?.copyWith(
+                                                        color: esquema
+                                                            .onSurfaceVariant),
                                               ),
                                               const SizedBox(width: 12),
-                                              Icon(Icons.bed_outlined, size: 14, color: esquema.onSurfaceVariant),
+                                              Icon(Icons.bed_outlined,
+                                                  size: 14,
+                                                  color:
+                                                      esquema.onSurfaceVariant),
                                               const SizedBox(width: 4),
                                               Text(
                                                 'Cama: ${sol.camaCodigo ?? 'S/N'}',
-                                                style: tema.textTheme.bodySmall?.copyWith(color: esquema.onSurfaceVariant),
+                                                style: tema.textTheme.bodySmall
+                                                    ?.copyWith(
+                                                        color: esquema
+                                                            .onSurfaceVariant),
                                               ),
                                             ],
                                           ),
@@ -340,14 +409,19 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                       ),
                                     ),
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
                                       decoration: BoxDecoration(
-                                        color: Colors.orange.withValues(alpha: 0.1),
+                                        color: Colors.orange
+                                            .withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(6),
                                       ),
                                       child: Text(
                                         TraductorEstados.traducir(sol.estado),
-                                        style: tema.textTheme.labelSmall?.copyWith(color: Colors.orange.shade800, fontWeight: FontWeight.bold),
+                                        style: tema.textTheme.labelSmall
+                                            ?.copyWith(
+                                                color: Colors.orange.shade800,
+                                                fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -357,21 +431,31 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                   child: Divider(height: 1),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: FilledButton.tonalIcon(
                                         onPressed: () async {
                                           HapticFeedback.lightImpact();
-                                          await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(sol.id, 'READY');
+                                          await ref
+                                              .read(
+                                                  historialesControllerProvider
+                                                      .notifier)
+                                              .actualizarEstadoArchivo(
+                                                  sol.id, 'READY');
                                         },
                                         style: FilledButton.styleFrom(
-                                          backgroundColor: Colors.green.withValues(alpha: 0.15),
-                                          foregroundColor: Colors.green.shade800,
-                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          backgroundColor: Colors.green
+                                              .withValues(alpha: 0.15),
+                                          foregroundColor:
+                                              Colors.green.shade800,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                         ),
                                         icon: const Icon(Icons.check, size: 18),
-                                        label: const Text('Listo', style: TextStyle(fontSize: 13)),
+                                        label: const Text('Listo',
+                                            style: TextStyle(fontSize: 13)),
                                       ),
                                     ),
                                     const SizedBox(width: 8),
@@ -379,15 +463,22 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                       child: FilledButton.tonalIcon(
                                         onPressed: () async {
                                           HapticFeedback.lightImpact();
-                                          await _mostrarDialogoPrestado(context, ref, sol.id);
+                                          await _mostrarDialogoPrestado(
+                                              context, ref, sol.id);
                                         },
                                         style: FilledButton.styleFrom(
-                                          backgroundColor: Colors.orange.withValues(alpha: 0.15),
-                                          foregroundColor: Colors.orange.shade800,
-                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          backgroundColor: Colors.orange
+                                              .withValues(alpha: 0.15),
+                                          foregroundColor:
+                                              Colors.orange.shade800,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                         ),
-                                        icon: const Icon(Icons.handshake_outlined, size: 18),
-                                        label: const Text('Prestar', style: TextStyle(fontSize: 13)),
+                                        icon: const Icon(
+                                            Icons.handshake_outlined,
+                                            size: 18),
+                                        label: const Text('Prestar',
+                                            style: TextStyle(fontSize: 13)),
                                       ),
                                     ),
                                     const SizedBox(width: 8),
@@ -395,15 +486,23 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                                       child: FilledButton.tonalIcon(
                                         onPressed: () async {
                                           HapticFeedback.lightImpact();
-                                          await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(sol.id, 'NOT_FOUND');
+                                          await ref
+                                              .read(
+                                                  historialesControllerProvider
+                                                      .notifier)
+                                              .actualizarEstadoArchivo(
+                                                  sol.id, 'NOT_FOUND');
                                         },
                                         style: FilledButton.styleFrom(
-                                          backgroundColor: Colors.red.withValues(alpha: 0.15),
+                                          backgroundColor: Colors.red
+                                              .withValues(alpha: 0.15),
                                           foregroundColor: Colors.red.shade800,
-                                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                         ),
                                         icon: const Icon(Icons.close, size: 18),
-                                        label: const Text('No Enc.', style: TextStyle(fontSize: 13)),
+                                        label: const Text('No Enc.',
+                                            style: TextStyle(fontSize: 13)),
                                       ),
                                     ),
                                   ],
@@ -425,21 +524,28 @@ class PantallaDashboardArchivo extends ConsumerWidget {
     );
   }
 
-  Future<void> _mostrarDialogoPrestado(BuildContext context, WidgetRef ref, String solicitudId) async {
+  Future<void> _mostrarDialogoPrestado(
+      BuildContext context, WidgetRef ref, String solicitudId) async {
     final controller = TextEditingController();
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Marcar como prestado'),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(labelText: 'Nota (A quién se prestó, etc.)', border: OutlineInputBorder()),
+          decoration: const InputDecoration(
+              labelText: 'Nota (A quién se prestó, etc.)',
+              border: OutlineInputBorder()),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancelar')),
+          TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Cancelar')),
           FilledButton(
             onPressed: () async {
-              await ref.read(historialesControllerProvider.notifier).actualizarEstadoArchivo(
+              await ref
+                  .read(historialesControllerProvider.notifier)
+                  .actualizarEstadoArchivo(
                     solicitudId,
                     'LENT',
                     notasArchivo: controller.text,

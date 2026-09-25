@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Fecha de un censo diario, con la regla de negocio que decide si es cargable.
 ///
 /// ## Por qué existe este value object
@@ -9,6 +11,7 @@
 /// El cliente valida en hora local de Bolivia a propósito: así nunca es más
 /// permisivo que el servidor, solo más estricto. No relajar esta regla para
 /// "aprovechar" el hueco de UTC (ADR-0005, D-9).
+@immutable
 class FechaCenso {
   /// Construye una fecha de censo válida.
   ///
@@ -78,8 +81,7 @@ class FechaCensoInvalida implements Exception {
 
   final DateTime fecha;
 
-  String get mensaje =>
-      'Solo se pueden cargar fechas anteriores a hoy. '
+  String get mensaje => 'Solo se pueden cargar fechas anteriores a hoy. '
       'No se admite el día en curso ni fechas futuras.';
 
   @override

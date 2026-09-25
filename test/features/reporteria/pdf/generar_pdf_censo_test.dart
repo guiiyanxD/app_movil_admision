@@ -128,9 +128,18 @@ void main() {
     // verdadero: el ancho de columna sale de repartir la hoja entre catorce, y
     // si un encabezado no entra el problema aparece acá y no en el dispositivo.
     const serviciosReales = [
-      'Pabellon Quirurgico', 'Neonatologia', 'UCIM', 'UTI Adultos',
-      'UTI Pediatria', 'Medicina Interna', 'Neuro Trauma', 'Pediatria',
-      'Medicina Cirugia', 'Infectologia', 'Ginecologia', 'Onco Pediatria',
+      'Pabellon Quirurgico',
+      'Neonatologia',
+      'UCIM',
+      'UTI Adultos',
+      'UTI Pediatria',
+      'Medicina Interna',
+      'Neuro Trauma',
+      'Pediatria',
+      'Medicina Cirugia',
+      'Infectologia',
+      'Ginecologia',
+      'Onco Pediatria',
     ];
 
     List<FilaReporteCenso> mesCompleto() => [

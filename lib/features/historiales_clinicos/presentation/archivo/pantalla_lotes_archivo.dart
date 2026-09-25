@@ -49,7 +49,8 @@ class PantallaLotesArchivo extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Error: $err')),
         data: (lotes) {
           if (lotes.isEmpty) {
-            return const Center(child: Text('No hay solicitudes para esta fecha.'));
+            return const Center(
+                child: Text('No hay solicitudes para esta fecha.'));
           }
 
           return ListView.builder(
@@ -58,9 +59,10 @@ class PantallaLotesArchivo extends ConsumerWidget {
             itemBuilder: (context, index) {
               final lote = lotes[index];
               final total = lote.solicitudes.length;
-              final pendientes = lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
+              final pendientes =
+                  lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
 
-              IconData iconoEstado = Icons.pending_actions;
+              var iconoEstado = Icons.pending_actions;
               Color colorEstado = Colors.orange;
 
               if (lote.estado == 'NOTIFIED') {
@@ -79,7 +81,8 @@ class PantallaLotesArchivo extends ConsumerWidget {
                     backgroundColor: colorEstado.withOpacity(0.2),
                     child: Icon(iconoEstado, color: colorEstado),
                   ),
-                  title: Text('Lote creado: ${lote.fechaCreacion.toLocal().toString().split('.')[0]}'),
+                  title: Text(
+                      'Lote creado: ${lote.fechaCreacion.toLocal().toString().split('.')[0]}'),
                   subtitle: Text(
                     pendientes > 0
                         ? '$pendientes de $total historiales pendientes'
@@ -88,7 +91,7 @@ class PantallaLotesArchivo extends ConsumerWidget {
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
+                      MaterialPageRoute<void>(
                         builder: (_) => PantallaGestionLote(loteId: lote.id),
                       ),
                     );

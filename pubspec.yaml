@@ -53,6 +53,7 @@ dependencies:
   # Cámara en vivo con visor rectangular para escaneo de documentos HC-2
   camera: ^0.12.0+2
   url_launcher: ^6.3.2
+  meta: ^1.17.0
 
 dev_dependencies:
   flutter_test:

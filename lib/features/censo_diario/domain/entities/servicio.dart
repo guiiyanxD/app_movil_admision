@@ -1,9 +1,12 @@
+import 'package:meta/meta.dart';
+
 /// Servicio hospitalario del catálogo.
 ///
 /// La app **nunca** fija la cantidad de servicios: renderiza los que devuelva
 /// `GET /servicios?soloActivos=true`. Un servicio que se abre físicamente se
 /// crea en el sistema web y aparece acá sin necesidad de release
 /// (ADR-0005, D-7).
+@immutable
 class Servicio {
   const Servicio({
     required this.id,
@@ -55,6 +58,7 @@ class Servicio {
 
 /// Traducción `entidadId → nombre en vaciado-admisión`, para servicios y para
 /// especialidades.
+@immutable
 class MapeoVaciado {
   const MapeoVaciado({required this.entidadId, required this.nombreVaciado});
 

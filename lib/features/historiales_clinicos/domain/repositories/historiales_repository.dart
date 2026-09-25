@@ -1,5 +1,5 @@
 import 'package:app_movil/core/error/resultado.dart';
-import '../models/solicitud_historial_model.dart';
+import 'package:app_movil/features/historiales_clinicos/domain/models/solicitud_historial_model.dart';
 
 abstract class HistorialesRepository {
   Future<Resultado<LoteSolicitudModel>> crearLote(List<String> internacionIds);
@@ -13,5 +13,6 @@ abstract class HistorialesRepository {
     String? notasArchivo,
   });
   Future<Resultado<void>> notificarLote(String loteId);
-  Future<Resultado<SolicitudHistorialModel>> actualizarRecepcion(String id, String estado);
+  Future<Resultado<SolicitudHistorialModel>> actualizarRecepcion(
+      String id, String estado);
 }

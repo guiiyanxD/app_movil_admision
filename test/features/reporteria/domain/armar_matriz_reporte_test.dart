@@ -7,7 +7,11 @@ void main() {
   const armar = ArmarMatrizReporte();
 
   /// Orden institucional: no es alfabético, sale del `indice` del catálogo.
-  const ordenCatalogo = ['Pabellon Quirurgico', 'Medicina Interna', 'Pediatria'];
+  const ordenCatalogo = [
+    'Pabellon Quirurgico',
+    'Medicina Interna',
+    'Pediatria'
+  ];
 
   List<FilaReporteCenso> muestra() => const [
         FilaReporteCenso(
@@ -279,7 +283,8 @@ void main() {
         );
 
         expect(
-          matriz.filas.every((f) => f.valores.length == matriz.servicios.length),
+          matriz.filas
+              .every((f) => f.valores.length == matriz.servicios.length),
           isTrue,
           reason: '${movimiento.name}: filas y columnas deben coincidir',
         );

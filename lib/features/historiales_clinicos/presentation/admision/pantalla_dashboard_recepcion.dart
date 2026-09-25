@@ -49,7 +49,8 @@ class PantallaDashboardRecepcion extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Error: $err')),
         data: (lotes) {
           if (lotes.isEmpty) {
-            return const Center(child: Text('No hay lotes en el rango seleccionado.'));
+            return const Center(
+                child: Text('No hay lotes en el rango seleccionado.'));
           }
 
           return ListView.builder(
@@ -58,9 +59,10 @@ class PantallaDashboardRecepcion extends ConsumerWidget {
             itemBuilder: (context, index) {
               final lote = lotes[index];
               final total = lote.solicitudes.length;
-              final pendientesRecepcion = lote.solicitudes.where((s) => s.estado == 'READY').length;
+              final pendientesRecepcion =
+                  lote.solicitudes.where((s) => s.estado == 'READY').length;
 
-              IconData iconoEstado = Icons.inbox;
+              var iconoEstado = Icons.inbox;
               Color colorEstado = Colors.blueGrey;
 
               if (lote.estado == 'NOTIFIED') {
@@ -80,7 +82,8 @@ class PantallaDashboardRecepcion extends ConsumerWidget {
                     backgroundColor: colorEstado.withOpacity(0.2),
                     child: Icon(iconoEstado, color: colorEstado),
                   ),
-                  title: Text('Lote creado: ${lote.fechaCreacion.toLocal().toString().split('.')[0]}'),
+                  title: Text(
+                      'Lote creado: ${lote.fechaCreacion.toLocal().toString().split('.')[0]}'),
                   subtitle: Text(
                     pendientesRecepcion > 0
                         ? '$pendientesRecepcion de $total historiales por recepcionar'
@@ -89,8 +92,9 @@ class PantallaDashboardRecepcion extends ConsumerWidget {
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => PantallaRecepcionHistoriales(loteId: lote.id),
+                      MaterialPageRoute<void>(
+                        builder: (_) =>
+                            PantallaRecepcionHistoriales(loteId: lote.id),
                       ),
                     );
                   },

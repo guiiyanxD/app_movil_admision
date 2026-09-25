@@ -30,7 +30,8 @@ void main() {
       );
 
       expect(validaciones.hayBloqueantes, isFalse);
-      expect(validaciones.deSeveridad(SeveridadValidacion.advertencia), isEmpty);
+      expect(
+          validaciones.deSeveridad(SeveridadValidacion.advertencia), isEmpty);
     });
   });
 

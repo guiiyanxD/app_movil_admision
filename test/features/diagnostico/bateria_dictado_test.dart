@@ -1,11 +1,11 @@
-import 'package:app_movil/features/diagnostico/domain/bateria_dictado.dart';
 import 'package:app_movil/features/censo_diario/domain/usecases/interpretar_dictado_censo.dart';
 import 'package:app_movil/features/censo_diario/domain/value_objects/campo_censo.dart';
+import 'package:app_movil/features/diagnostico/domain/bateria_dictado.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const interpretar = InterpretarDictadoCenso();
-  final momento = DateTime(2026, 8, 1);
+  final momento = DateTime(2026, 8);
 
   IntentoDictado intentar(ItemBateria item, String transcripcion) =>
       IntentoDictado(

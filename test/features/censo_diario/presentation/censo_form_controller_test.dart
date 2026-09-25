@@ -328,7 +328,8 @@ void main() {
 
       final despues = logica.estado.censo;
       for (final campo in CampoCenso.values) {
-        expect(despues.valorDe(campo), antes.valorDe(campo), reason: campo.name);
+        expect(despues.valorDe(campo), antes.valorDe(campo),
+            reason: campo.name);
       }
       expect(logica.estado.tieneVozPendiente, isFalse);
     });
@@ -429,7 +430,8 @@ void main() {
 
       expect(guardo, isFalse);
       expect(repositorio.guardados, isEmpty);
-      expect(logica.estado.validaciones.primeraDe('V-05')!.esBloqueante, isTrue);
+      expect(
+          logica.estado.validaciones.primeraDe('V-05')!.esBloqueante, isTrue);
     });
 
     test('el saldo que no cierra advierte pero deja guardar', () async {

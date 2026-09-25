@@ -1,5 +1,7 @@
 import 'package:app_movil/features/censo_diario/domain/entities/tipo_movimiento_censo.dart';
 
+import 'package:meta/meta.dart';
+
 /// Registro de camas prestadas de un servicio en una fecha.
 ///
 /// Semántica fijada en ADR-0005 (D-5), verificada contra la query canónica
@@ -14,6 +16,7 @@ import 'package:app_movil/features/censo_diario/domain/entities/tipo_movimiento_
 ///
 /// **No participa en ninguna fórmula.** No afecta el saldo, la dotación ni el
 /// cuadre contra la capacidad. Solo se registra.
+@immutable
 class CamaPrestada {
   const CamaPrestada({
     required this.especialidadId,

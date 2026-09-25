@@ -42,7 +42,8 @@ class CensoFormLogica {
   ///
   /// Una transición ilegal es un error de programación y revienta acá, en vez
   /// de dejar el formulario en un estado imposible que después nadie explica.
-  void _transicionar(FaseFormulario hacia, CensoFormState Function() construir) {
+  void _transicionar(
+      FaseFormulario hacia, CensoFormState Function() construir) {
     if (_estado.fase != hacia && !puedeTransicionar(_estado.fase, hacia)) {
       throw TransicionInvalida(_estado.fase, hacia);
     }

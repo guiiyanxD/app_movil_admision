@@ -1,5 +1,4 @@
 import 'package:app_movil/app/app.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:app_movil/core/config/config_providers.dart';
 import 'package:app_movil/core/config/gestor_servidor.dart';
 import 'package:app_movil/core/red/api_client.dart';
@@ -14,6 +13,9 @@ import 'package:app_movil/features/auth/presentation/auth_providers.dart';
 import 'package:app_movil/features/censo_diario/data/datasources/censo_diario_remote_datasource.dart';
 import 'package:app_movil/features/censo_diario/data/repositories/censo_diario_repository_impl.dart';
 import 'package:app_movil/features/censo_diario/presentation/providers/censo_providers.dart';
+import 'package:app_movil/features/historiales_clinicos/data/datasources/historiales_remote_datasource.dart';
+import 'package:app_movil/features/historiales_clinicos/data/repositories/historiales_repository_impl.dart';
+import 'package:app_movil/features/historiales_clinicos/presentation/providers/historiales_providers.dart';
 import 'package:app_movil/features/internaciones/data/datasources/camas_remote_datasource.dart';
 import 'package:app_movil/features/internaciones/data/datasources/internaciones_remote_datasource.dart';
 import 'package:app_movil/features/internaciones/data/datasources/pacientes_remote_datasource.dart';
@@ -22,19 +24,17 @@ import 'package:app_movil/features/internaciones/data/repositories/internaciones
 import 'package:app_movil/features/internaciones/data/repositories/pacientes_repository_impl.dart';
 import 'package:app_movil/features/internaciones/presentation/providers/ingreso_hc2_providers.dart';
 import 'package:app_movil/features/internaciones/presentation/providers/tablero_camas_providers.dart';
-import 'package:app_movil/features/historiales_clinicos/data/datasources/historiales_remote_datasource.dart';
-import 'package:app_movil/features/historiales_clinicos/data/repositories/historiales_repository_impl.dart';
-import 'package:app_movil/features/historiales_clinicos/presentation/providers/historiales_providers.dart';
 import 'package:app_movil/features/reporteria/data/datasources/reporteria_remote_datasource.dart';
 import 'package:app_movil/features/reporteria/data/repositories/reporteria_repository_impl.dart';
 import 'package:app_movil/features/reporteria/presentation/providers/reporteria_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 /// Raíz de composición: el **único** lugar donde se deciden las dependencias.
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting('es', null);
+  await initializeDateFormatting('es');
 
   runApp(
     ProviderScope(

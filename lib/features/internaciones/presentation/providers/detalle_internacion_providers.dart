@@ -10,8 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///
 /// Si la petición falla, lanza una excepción con el mensaje de error,
 /// lo cual será manejado por la UI usando `AsyncValue.when` o `AsyncValue.whenData`.
-final internacionDetalleProvider =
-    FutureProvider.autoDispose.family<InternacionDetalle, String>((ref, id) async {
+final AutoDisposeFutureProviderFamily<InternacionDetalle, String>
+    internacionDetalleProvider = FutureProvider.autoDispose
+        .family<InternacionDetalle, String>((ref, id) async {
   final repository = ref.watch(internacionesRepositoryProvider);
   final resultado = await repository.obtenerDetalle(id);
 

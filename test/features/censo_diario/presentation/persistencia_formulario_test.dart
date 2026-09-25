@@ -279,7 +279,7 @@ void main() {
   group('CA-06 — guardar invalida la caché de la fecha', () {
     test('volver al servicio recién guardado muestra los valores nuevos',
         () async {
-      sembrar(cargaGuardada(medicinaInterna, ingreso: 4));
+      sembrar(cargaGuardada(medicinaInterna));
 
       final uno = await abrir(argsUno);
       expect(estadoDe(argsUno).censo.ingreso, 4);
@@ -315,7 +315,7 @@ void main() {
 
   group('Precarga desde la caché', () {
     test('cada servicio recibe su propia carga, no la del vecino', () async {
-      sembrar(cargaGuardada(medicinaInterna, ingreso: 4));
+      sembrar(cargaGuardada(medicinaInterna));
       sembrar(cargaGuardada(pediatria, ingreso: 9));
 
       await abrir(argsUno);
@@ -356,7 +356,9 @@ void main() {
       expect(estado.falloLecturaPrevia, isTrue);
       expect(estado.falla, isNull);
 
-      container.read(censoFormProvider(argsUno).notifier).logica
+      container
+          .read(censoFormProvider(argsUno).notifier)
+          .logica
           .cambiarCampo(CampoCenso.total, 34);
       expect(estadoDe(argsUno).censo.total, 34, reason: 'se sigue trabajando');
     });

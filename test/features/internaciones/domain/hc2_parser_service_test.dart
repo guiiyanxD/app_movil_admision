@@ -69,8 +69,11 @@ void main() {
     });
   });
 
-  group('HC2ParserService - Parseo de Formularios Reales (Muestras Fotográficas)', () {
-    test('extrae datos completos de Formulario 1 (Beneficiario con Titular)', () {
+  group(
+      'HC2ParserService - Parseo de Formularios Reales (Muestras Fotográficas)',
+      () {
+    test('extrae datos completos de Formulario 1 (Beneficiario con Titular)',
+        () {
       const textoOCR = '''
 Caja Petrolera de Salud          FORMULARIO DE INGRESO HOSPITALARIO           Impresión: 15/09/2026 23:12
 Form. HC-2                             FECHA INTERNACION 15/09/2026                         NHC2: 004285
@@ -102,7 +105,8 @@ Diagnostico de Ingreso: SX ICTERICO Tipo Ingreso: NORMAL
       expect(datos.tipoPaciente, equals('beneficiario'));
       expect(datos.esBeneficiario, isTrue);
       expect(datos.regional, equals('SANTA CRUZ'));
-      expect(datos.empresaAseguradora, equals('GESTORA PUBLICA DE LA SEGURIDA'));
+      expect(
+          datos.empresaAseguradora, equals('GESTORA PUBLICA DE LA SEGURIDA'));
 
       // Titular
       expect(datos.matriculaTitular, equals('19500504ZBH'));

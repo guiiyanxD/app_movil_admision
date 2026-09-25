@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 
 class BottomSheetCambiarEstadoCama extends ConsumerStatefulWidget {
   const BottomSheetCambiarEstadoCama({
-    super.key,
     required this.cama,
+    super.key,
   });
 
   final CamaTablero cama;
@@ -82,7 +82,7 @@ class _BottomSheetCambiarEstadoCamaState
     });
   }
 
-  void _guardar() {
+  Future<void> _guardar() async {
     if (!_formKey.currentState!.validate()) return;
 
     if (_fechaFin != null && _fechaInicio != null) {
@@ -107,7 +107,7 @@ class _BottomSheetCambiarEstadoCamaState
       fechaFin: _estadoSeleccionado != 'disponible' ? _fechaFin : null,
     );
 
-    ref.read(operacionesInternacionProvider.notifier).cambiarEstadoCama(params);
+    await ref.read(operacionesInternacionProvider.notifier).cambiarEstadoCama(params);
   }
 
   @override
@@ -156,7 +156,7 @@ class _BottomSheetCambiarEstadoCamaState
                   labelText: 'Nuevo Estado',
                   border: OutlineInputBorder(),
                 ),
-                value: _estadoSeleccionado,
+                initialValue: _estadoSeleccionado,
                 items: const [
                   DropdownMenuItem(
                     value: 'disponible',

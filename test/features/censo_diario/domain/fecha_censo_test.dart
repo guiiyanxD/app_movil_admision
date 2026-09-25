@@ -15,7 +15,7 @@ void main() {
 
     test('rechaza fechas futuras', () {
       expect(
-        FechaCenso.esCargable(DateTime(2026, 8, 1), ahora: medioDiaBolivia),
+        FechaCenso.esCargable(DateTime(2026, 8), ahora: medioDiaBolivia),
         isFalse,
       );
     });
@@ -52,7 +52,8 @@ void main() {
     // curso y rechazarlo.
     final nueveDeLaNocheEnBolivia = DateTime.utc(2026, 7, 31, 1);
 
-    test('a las 21:00 hora Bolivia, el día en curso sigue sin ser cargable', () {
+    test('a las 21:00 hora Bolivia, el día en curso sigue sin ser cargable',
+        () {
       expect(
         FechaCenso.esCargable(
           DateTime(2026, 7, 30),
@@ -83,7 +84,7 @@ void main() {
 
   group('FechaCenso — serialización', () {
     test('produce YYYY-MM-DD plano, con ceros a la izquierda', () {
-      final fecha = FechaCenso(DateTime(2026, 6, 1), ahora: medioDiaBolivia);
+      final fecha = FechaCenso(DateTime(2026, 6), ahora: medioDiaBolivia);
       expect(fecha.comoParametroApi, '2026-06-01');
     });
 
@@ -99,7 +100,7 @@ void main() {
     });
 
     test('diaAnterior retrocede un día calendario', () {
-      final fecha = FechaCenso(DateTime(2026, 3, 1), ahora: medioDiaBolivia);
+      final fecha = FechaCenso(DateTime(2026, 3), ahora: medioDiaBolivia);
       expect(fecha.diaAnterior, DateTime(2026, 2, 28));
     });
   });

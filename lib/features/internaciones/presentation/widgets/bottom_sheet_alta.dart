@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BottomSheetAltaMedica extends ConsumerStatefulWidget {
-  const BottomSheetAltaMedica({super.key, required this.internacionId});
+  const BottomSheetAltaMedica({required this.internacionId, super.key});
 
   final String internacionId;
 
   @override
-  ConsumerState<BottomSheetAltaMedica> createState() => _BottomSheetAltaMedicaState();
+  ConsumerState<BottomSheetAltaMedica> createState() =>
+      _BottomSheetAltaMedicaState();
 }
 
 class _BottomSheetAltaMedicaState extends ConsumerState<BottomSheetAltaMedica> {
@@ -26,7 +27,8 @@ class _BottomSheetAltaMedicaState extends ConsumerState<BottomSheetAltaMedica> {
   Widget build(BuildContext context) {
     final estado = ref.watch(operacionesInternacionProvider);
 
-    ref.listen<AsyncValue<void>>(operacionesInternacionProvider, (previo, actual) {
+    ref.listen<AsyncValue<void>>(operacionesInternacionProvider,
+        (previo, actual) {
       actual.whenOrNull(
         data: (_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -69,12 +71,14 @@ class _BottomSheetAltaMedicaState extends ConsumerState<BottomSheetAltaMedica> {
               labelText: 'Motivo de Egreso',
               border: OutlineInputBorder(),
             ),
-            value: _motivoSeleccionado,
+            initialValue: _motivoSeleccionado,
             items: _motivos
-                .map((m) => DropdownMenuItem(
-                      value: m['value'],
-                      child: Text(m['label']!),
-                    ))
+                .map(
+                  (m) => DropdownMenuItem(
+                    value: m['value'],
+                    child: Text(m['label']!),
+                  ),
+                )
                 .toList(),
             onChanged: estado.isLoading
                 ? null
@@ -84,12 +88,12 @@ class _BottomSheetAltaMedicaState extends ConsumerState<BottomSheetAltaMedica> {
           FilledButton.icon(
             onPressed: (_motivoSeleccionado == null || estado.isLoading)
                 ? null
-                : () {
+                : () async {
                     final params = RegistrarEgresoParams(
                       internacionId: widget.internacionId,
                       motivoEgreso: _motivoSeleccionado!,
                     );
-                    ref
+                    await ref
                         .read(operacionesInternacionProvider.notifier)
                         .registrarEgreso(params);
                   },
@@ -103,7 +107,8 @@ class _BottomSheetAltaMedicaState extends ConsumerState<BottomSheetAltaMedica> {
                     ),
                   )
                 : const Icon(Icons.check_circle_outline),
-            label: Text(estado.isLoading ? 'Procesando...' : 'Confirmar Egreso'),
+            label:
+                Text(estado.isLoading ? 'Procesando...' : 'Confirmar Egreso'),
           ),
         ],
       ),

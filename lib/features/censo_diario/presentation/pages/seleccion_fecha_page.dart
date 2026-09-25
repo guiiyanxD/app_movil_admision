@@ -1,5 +1,3 @@
-import 'package:app_movil/app/rutas.dart';
-import 'package:app_movil/app/tema.dart';
 import 'package:app_movil/app/widgets/menu_de_cuenta.dart';
 import 'package:app_movil/core/sesion/permisos_providers.dart';
 import 'package:app_movil/features/censo_diario/domain/entities/servicio.dart';
@@ -43,8 +41,18 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
   late int _anhoSeleccionado;
 
   static const _nombresMeses = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
   ];
 
   @override
@@ -207,13 +215,16 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
               children: [
                 ActionChip(
                   avatar: const Icon(Icons.history, size: 18),
-                  label: Text('Anteayer (${_dosDigitos(anteayer.day)}/${_dosDigitos(anteayer.month)})'),
-                  onPressed: _verificando ? null : () => _continuarConFecha(anteayer),
+                  label: Text(
+                      'Anteayer (${_dosDigitos(anteayer.day)}/${_dosDigitos(anteayer.month)})'),
+                  onPressed:
+                      _verificando ? null : () => _continuarConFecha(anteayer),
                 ),
                 ActionChip(
                   avatar: const Icon(Icons.calendar_month, size: 18),
                   label: const Text('Abrir Calendario...'),
-                  onPressed: _verificando ? null : () => _abrirSelectorFecha(context),
+                  onPressed:
+                      _verificando ? null : () => _abrirSelectorFecha(context),
                 ),
               ],
             ),
@@ -303,10 +314,11 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
                     if (servicios.isEmpty) {
                       return const Text('No hay servicios activos.');
                     }
-                    final servicioActual = _servicioSeleccionado ?? servicios.first;
+                    final servicioActual =
+                        _servicioSeleccionado ?? servicios.first;
 
                     return DropdownButtonFormField<Servicio>(
-                      value: servicioActual,
+                      initialValue: servicioActual,
                       isExpanded: true,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.local_hospital_outlined),
@@ -368,7 +380,8 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
                   runSpacing: 8,
                   children: [
                     ChoiceChip(
-                      label: Text('Este mes (${_nombresMeses[DateTime.now().month - 1]})'),
+                      label: Text(
+                          'Este mes (${_nombresMeses[DateTime.now().month - 1]})'),
                       selected: _mesSeleccionado == DateTime.now().month &&
                           _anhoSeleccionado == DateTime.now().year,
                       onSelected: (sel) {
@@ -388,8 +401,10 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
                         if (sel) {
                           HapticFeedback.selectionClick();
                           final ahora = DateTime.now();
-                          final mesAnt = ahora.month == 1 ? 12 : ahora.month - 1;
-                          final anhoAnt = ahora.month == 1 ? ahora.year - 1 : ahora.year;
+                          final mesAnt =
+                              ahora.month == 1 ? 12 : ahora.month - 1;
+                          final anhoAnt =
+                              ahora.month == 1 ? ahora.year - 1 : ahora.year;
                           setState(() {
                             _mesSeleccionado = mesAnt;
                             _anhoSeleccionado = anhoAnt;
@@ -410,7 +425,8 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
           loading: () => const SizedBox.shrink(),
           error: (_, __) => const SizedBox.shrink(),
           data: (servicios) {
-            final servicio = _servicioSeleccionado ?? (servicios.isNotEmpty ? servicios.first : null);
+            final servicio = _servicioSeleccionado ??
+                (servicios.isNotEmpty ? servicios.first : null);
             if (servicio == null) return const SizedBox.shrink();
 
             final nombreMes = _nombresMeses[_mesSeleccionado - 1];
@@ -522,8 +538,18 @@ class _SeleccionFechaPageState extends ConsumerState<SeleccionFechaPage> {
 
   static String _formatearFechaLarga(DateTime fecha) {
     const meses = [
-      'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre',
+      'enero',
+      'febrero',
+      'marzo',
+      'abril',
+      'mayo',
+      'junio',
+      'julio',
+      'agosto',
+      'septiembre',
+      'octubre',
+      'noviembre',
+      'diciembre',
     ];
     return '${fecha.day} de ${meses[fecha.month - 1]} de ${fecha.year}';
   }

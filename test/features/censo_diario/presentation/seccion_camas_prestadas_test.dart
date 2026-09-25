@@ -83,7 +83,8 @@ void main() {
 
       // Elegir una especialidad sin mapeo garantizaría un 400 al confirmar,
       // así que ni se ofrece: se explica el motivo.
-      expect(find.textContaining('mapeo hacia el sistema central'), findsOneWidget);
+      expect(find.textContaining('mapeo hacia el sistema central'),
+          findsOneWidget);
       expect(find.text('Agregar cama prestada'), findsNothing);
     });
   });

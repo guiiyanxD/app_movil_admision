@@ -2,7 +2,7 @@ import 'package:app_movil/features/censo_diario/domain/entities/progreso_dia.dar
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final fecha = DateTime(2026, 6, 1);
+  final fecha = DateTime(2026, 6);
 
   ProgresoServicio servicio(
     String nombre, {
