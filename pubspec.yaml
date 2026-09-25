@@ -67,6 +67,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
 
 sentry:
   upload_debug_symbols: true

@@ -22,9 +22,6 @@ import 'package:flutter/material.dart';
 /// directo: no cruza ningún límite y pasar por una tabla solo escondería el
 /// argumento tipado detrás de un `Object?`.
 abstract final class Rutas {
-  static const String diagnosticoDictado = '/diagnostico/dictado';
-  static const String pruebaPdf = '/diagnostico/pdf';
-  static const String pruebaSentry = '/diagnostico/sentry';
   static const String reporteCenso = '/reporteria/censo';
   static const String tableroCamas = '/internaciones/tablero';
 
@@ -44,8 +41,8 @@ abstract final class Rutas {
   }
 
   static const Map<String, WidgetBuilder> _destinos = {
-    diagnosticoDictado: _aDiagnostico,
-    pruebaPdf: _aPruebaPdf,
+    /*diagnosticoDictado: _aDiagnostico,
+    pruebaPdf: _aPruebaPdf,*/
     reporteCenso: _aReporteCenso,
     tableroCamas: _aTableroCamas,
     solicitarHistoriales: _aSolicitarHistoriales,

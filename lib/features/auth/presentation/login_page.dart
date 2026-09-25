@@ -74,24 +74,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     // ── Logotipo / Insignia Médica ─────────────────────────
                     Center(
                       child: Container(
-                        width: 76,
-                        height: 76,
+                        width: 90,
+                        height: 90,
                         decoration: BoxDecoration(
-                          color: tema.colorScheme.primaryContainer,
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
                               color: tema.colorScheme.primary
-                                  .withValues(alpha: 0.15),
+                                  .withValues(alpha: 0.2),
                               blurRadius: 16,
-                              offset: const Offset(0, 4),
+                              offset: const Offset(0, 6),
                             ),
                           ],
                         ),
-                        child: Icon(
-                          Icons.local_hospital_rounded,
-                          size: 40,
-                          color: tema.colorScheme.primary,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            'assets/icon.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -211,21 +212,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
-
-                    // ── Acceso a prueba de dictado ────────────────────────
-                    TextButton.icon(
-                      onPressed: () {
-                        HapticFeedback.selectionClick();
-                        Navigator.of(context)
-                            .pushNamed(Rutas.diagnosticoDictado);
-                      },
-                      icon: const Icon(Icons.mic_none, size: 18),
-                      label: const Text('Probar dictado sin iniciar sesión'),
-                    ),
-
-                    const SizedBox(height: 12),
-                    const _DestinoActivo(),
                   ],
                 ),
               ),
@@ -237,62 +223,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 }
 
-/// Contra qué servidor está corriendo esta compilación.
-class _DestinoActivo extends ConsumerWidget {
-  const _DestinoActivo();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final config = ref.watch(configuracionProvider);
-    final tema = Theme.of(context);
-
-    return InkWell(
-      onTap: () => SelectorServidorModal.mostrar(context),
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color:
-              tema.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: TemaApp.semilla.withValues(alpha: 0.3),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.dns_rounded,
-              size: 14,
-              color: TemaApp.semilla,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                '${config.nombreDestino} · ${config.urlBaseApi}',
-                style: tema.textTheme.bodySmall?.copyWith(
-                  color: tema.colorScheme.onSurfaceVariant,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(width: 6),
-            const Icon(
-              Icons.tune_rounded,
-              size: 13,
-              color: TemaApp.semilla,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _Aviso extends StatelessWidget {
   const _Aviso({required this.texto, this.esError = false});

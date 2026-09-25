@@ -11,7 +11,7 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
   const ConfiguracionDartDefine({
     required this.urlBaseApi,
     required this.nombreDestino,
-    this.ambiente = AmbienteServidor.equipo,
+    this.ambiente = AmbienteServidor.produccion,
     this.timeoutConexion = const Duration(seconds: 45),
     this.timeoutRespuesta = const Duration(seconds: 45),
   });
@@ -36,7 +36,7 @@ class ConfiguracionDartDefine implements ConfiguracionApp {
           'O utiliza tool/correr.ps1',
         );
       }
-      const defecto = AmbienteServidor.equipo;
+      const defecto = AmbienteServidor.produccion;
       return ConfiguracionDartDefine(
         urlBaseApi: defecto.url,
         nombreDestino: destino.isNotEmpty ? destino : defecto.nombre,
