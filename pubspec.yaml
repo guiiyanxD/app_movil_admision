@@ -63,6 +63,7 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.5
   very_good_analysis: ^10.2.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
@@ -72,3 +73,8 @@ sentry:
   upload_source_maps: true
   project: flutter
   org: willdeveloper
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.jpg"
