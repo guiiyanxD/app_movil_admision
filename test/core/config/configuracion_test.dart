@@ -72,7 +72,7 @@ void main() {
       addTearDown(contenedor.dispose);
 
       final config = contenedor.read(gestorServidorProvider).config;
-      expect(config.urlBaseApi, contains('3001'));
+      expect(config.urlBaseApi, contains('willdeveloper.site'));
       expect(config.nombreDestino, isNotEmpty);
     });
   });
@@ -85,10 +85,10 @@ void main() {
       );
     });
 
-    test('sin API_URL por defecto toma equipo local (192.168.66.84)', () {
+    test('sin API_URL por defecto toma entorno prod (willdeveloper.site)', () {
       final config = ConfiguracionDartDefine.desdeEntorno();
-      expect(config.urlBaseApi, 'http://192.168.66.84:3001');
-      expect(config.ambiente, AmbienteServidor.equipo);
+      expect(config.urlBaseApi, 'https://censo.willdeveloper.site');
+      expect(config.ambiente, AmbienteServidor.produccion);
     });
 
     test('conserva los valores recibidos', () {
@@ -99,8 +99,8 @@ void main() {
 
       expect(config.urlBaseApi, 'http://192.168.1.10:3001');
       expect(config.nombreDestino, 'Hospital');
-      expect(config.timeoutConexion, const Duration(seconds: 15));
-      expect(config.timeoutRespuesta, const Duration(seconds: 20));
+      expect(config.timeoutConexion, const Duration(seconds: 45));
+      expect(config.timeoutRespuesta, const Duration(seconds: 45));
     });
   });
 

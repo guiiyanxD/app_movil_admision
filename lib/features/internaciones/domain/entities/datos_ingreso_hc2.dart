@@ -14,13 +14,9 @@ class DatosIngresoHC2 {
     this.empresaAseguradora,
     this.carnetIdentidad,
     this.matriculaTitular,
-    this.nombreTitular,
     this.apellidoPaternoTitular,
     this.apellidoMaternoTitular,
     this.nombresTitular,
-    this.fechaNacimientoTitular,
-    this.sexoTitular,
-    this.empresaTitular,
     this.fechaIngreso,
     this.servicio,
     this.camaCodigo,
@@ -50,13 +46,9 @@ class DatosIngresoHC2 {
 
   // ── Titular (aplica si tipoPaciente == 'beneficiario') ─────────────────────
   final String? matriculaTitular;
-  final String? nombreTitular;
   final String? apellidoPaternoTitular;
   final String? apellidoMaternoTitular;
   final String? nombresTitular;
-  final DateTime? fechaNacimientoTitular;
-  final String? sexoTitular;
-  final String? empresaTitular;
 
   // ── Internación ───────────────────────────────────────────────────────────
   final DateTime? fechaIngreso;
@@ -87,9 +79,6 @@ class DatosIngresoHC2 {
   }
 
   String get nombreCompletoTitular {
-    if (nombreTitular != null && nombreTitular!.isNotEmpty) {
-      return nombreTitular!;
-    }
     final buffer = StringBuffer();
     if (apellidoPaternoTitular != null) buffer.write(apellidoPaternoTitular);
     if (apellidoMaternoTitular != null && apellidoMaternoTitular!.isNotEmpty) {
@@ -114,13 +103,9 @@ class DatosIngresoHC2 {
     String? empresaAseguradora,
     String? carnetIdentidad,
     String? matriculaTitular,
-    String? nombreTitular,
     String? apellidoPaternoTitular,
     String? apellidoMaternoTitular,
     String? nombresTitular,
-    DateTime? fechaNacimientoTitular,
-    String? sexoTitular,
-    String? empresaTitular,
     DateTime? fechaIngreso,
     String? servicio,
     String? camaCodigo,
@@ -147,16 +132,11 @@ class DatosIngresoHC2 {
       empresaAseguradora: empresaAseguradora ?? this.empresaAseguradora,
       carnetIdentidad: carnetIdentidad ?? this.carnetIdentidad,
       matriculaTitular: matriculaTitular ?? this.matriculaTitular,
-      nombreTitular: nombreTitular ?? this.nombreTitular,
       apellidoPaternoTitular:
           apellidoPaternoTitular ?? this.apellidoPaternoTitular,
       apellidoMaternoTitular:
           apellidoMaternoTitular ?? this.apellidoMaternoTitular,
       nombresTitular: nombresTitular ?? this.nombresTitular,
-      fechaNacimientoTitular:
-          fechaNacimientoTitular ?? this.fechaNacimientoTitular,
-      sexoTitular: sexoTitular ?? this.sexoTitular,
-      empresaTitular: empresaTitular ?? this.empresaTitular,
       fechaIngreso: fechaIngreso ?? this.fechaIngreso,
       servicio: servicio ?? this.servicio,
       camaCodigo: camaCodigo ?? this.camaCodigo,

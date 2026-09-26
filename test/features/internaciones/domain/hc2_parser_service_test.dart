@@ -106,16 +106,13 @@ Diagnostico de Ingreso: SX ICTERICO Tipo Ingreso: NORMAL
       expect(datos.esBeneficiario, isTrue);
       expect(datos.regional, equals('SANTA CRUZ'));
       expect(
-          datos.empresaAseguradora, equals('GESTORA PUBLICA DE LA SEGURIDA'));
+          datos.empresaAseguradora, equals('GESTORA PUBLICA DE LA SEGURIDA'),);
 
       // Titular
       expect(datos.matriculaTitular, equals('19500504ZBH'));
-      expect(datos.nombreTitular, equals('ZABALA BURGOS HUGO'));
       expect(datos.apellidoPaternoTitular, equals('ZABALA'));
       expect(datos.apellidoMaternoTitular, equals('BURGOS'));
       expect(datos.nombresTitular, equals('HUGO'));
-      expect(datos.sexoTitular, equals('masculino'));
-      expect(datos.fechaNacimientoTitular, equals(DateTime.utc(1950, 5, 4)));
 
       // Internación
       expect(datos.camaCodigo, equals('216-B'));

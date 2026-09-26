@@ -100,75 +100,29 @@ class RegistroIngresoHC2Notifier
   }) async {
     state = const EstadoRegistroIngreso(cargando: true);
 
-    final pacientesRepo = ref.read(pacientesRepositoryProvider);
     final internacionesRepo = ref.read(internacionesRepositoryProvider);
 
     try {
-      // ── Paso 1: Si es beneficiario y el titular no existe, crearlo ────────
+      // ── Mapeo de campos opcionales del titular (si aplica) ────────────────
+      Map<String, dynamic>? datosTitular;
       if (datos.esBeneficiario &&
           titularExistente == null &&
           datos.matriculaTitular != null &&
-          datos.matriculaTitular!.isNotEmpty) {
-        final paternoTit = datos.apellidoPaternoTitular ?? '';
-        final nomTit = datos.nombresTitular ?? '';
-        final fnTit = datos.fechaNacimientoTitular ?? DateTime.utc(1970);
-        final sexoTit = datos.sexoTitular ?? 'masculino';
-
-        if (paternoTit.isNotEmpty && nomTit.isNotEmpty) {
-          await pacientesRepo.crearPaciente(
-            CrearPacienteParams(
-              nombres: nomTit,
-              apellidoPaterno: paternoTit,
-              apellidoMaterno: datos.apellidoMaternoTitular,
-              fechaNacimiento: fnTit,
-              sexo: sexoTit,
-              empresaAseguradora: datos.empresaTitular,
-            ),
-          );
-        }
+          datos.matriculaTitular!.isNotEmpty &&
+          datos.nombresTitular != null &&
+          datos.apellidoPaternoTitular != null) {
+        datosTitular = {
+          'matricula': datos.matriculaTitular,
+          'nombres': datos.nombresTitular,
+          'apellidoPaterno': datos.apellidoPaternoTitular,
+          'apellidoMaterno': datos.apellidoMaternoTitular,
+        };
       }
 
-      // ── Paso 2: Si el paciente no existe, crearlo ─────────────────────────
-      var pacienteFinal = pacienteExistente;
-      if (pacienteFinal == null) {
-        final resPaciente = await pacientesRepo.crearPaciente(
-          CrearPacienteParams(
-            nombres: datos.nombres,
-            apellidoPaterno: datos.apellidoPaterno,
-            apellidoMaterno: datos.apellidoMaterno,
-            fechaNacimiento: datos.fechaNacimiento ?? DateTime.utc(1970),
-            sexo: datos.sexo,
-            tipoPaciente: datos.tipoPaciente,
-            documentoNumero: datos.carnetIdentidad,
-            empresaAseguradora: datos.empresaAseguradora,
-            regional: datos.regional,
-            edadAprox: datos.edadAprox,
-          ),
-        );
-
-        if (resPaciente.esFallo) {
-          state = state.copyWith(
-            cargando: false,
-            error:
-                'Error al registrar paciente: ${resPaciente.fallaONula?.mensaje}',
-          );
-          return false;
-        }
-        pacienteFinal = resPaciente.valorONulo;
-      }
-
-      if (pacienteFinal == null) {
-        state = state.copyWith(
-          cargando: false,
-          error: 'No se pudo obtener el identificador del paciente.',
-        );
-        return false;
-      }
-
-      // ── Paso 3: Registrar la internación hospitalaria ─────────────────────
+      // ── Registro de la internación hospitalaria (Atómico) ─────────────────
       final resIngreso = await internacionesRepo.registrarIngreso(
         RegistrarIngresoParams(
-          pacienteId: pacienteFinal.id,
+          pacienteId: pacienteExistente?.id,
           camaId: camaId,
           especialidadId: especialidadId,
           viaIngreso: datos.tipoIngreso,
@@ -181,6 +135,18 @@ class RegistroIngresoHC2Notifier
           familiarReferenciaTelefono: datos.contactoEmergenciaTelefono,
           familiarReferenciaDireccion: datos.contactoEmergenciaDireccion,
           solicitarHistoriaAmarilla: solicitarHistoriaAmarilla,
+          
+          // Datos para la creación del paciente al vuelo
+          nombres: pacienteExistente == null ? datos.nombres : null,
+          apellidoPaterno: pacienteExistente == null ? datos.apellidoPaterno : null,
+          apellidoMaterno: pacienteExistente == null ? datos.apellidoMaterno : null,
+          fechaNacimiento: pacienteExistente == null ? (datos.fechaNacimiento?.toIso8601String() ?? DateTime.utc(1970).toIso8601String()) : null,
+          sexo: pacienteExistente == null ? datos.sexo : null,
+          tipoPaciente: pacienteExistente == null ? datos.tipoPaciente : null,
+          documentoNumero: pacienteExistente == null ? datos.carnetIdentidad : null,
+          empresaAseguradora: pacienteExistente == null ? datos.empresaAseguradora : null,
+          regional: pacienteExistente == null ? datos.regional : null,
+          datosTitular: datosTitular,
         ),
       );
 

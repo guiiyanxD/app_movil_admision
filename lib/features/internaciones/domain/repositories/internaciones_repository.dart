@@ -4,7 +4,7 @@ import 'package:app_movil/features/internaciones/domain/entities/internacion_det
 /// Parámetros para registrar el ingreso hospitalario de un paciente en una cama.
 class RegistrarIngresoParams {
   const RegistrarIngresoParams({
-    required this.pacienteId,
+    this.pacienteId,
     required this.camaId,
     required this.especialidadId,
     required this.medicoTratante,
@@ -16,9 +16,22 @@ class RegistrarIngresoParams {
     this.familiarReferenciaTelefono,
     this.familiarReferenciaDireccion,
     this.solicitarHistoriaAmarilla = false,
+    // Nuevos campos para creación atómica
+    this.nombres,
+    this.apellidoPaterno,
+    this.apellidoMaterno,
+    this.fechaNacimiento,
+    this.sexo,
+    this.tipoPaciente,
+    this.documentoNumero,
+    this.empresaAseguradora,
+    this.regional,
+    this.direccion,
+    this.telefono,
+    this.datosTitular,
   });
 
-  final String pacienteId;
+  final String? pacienteId;
   final String camaId;
   final String especialidadId;
   final String viaIngreso;
@@ -33,26 +46,59 @@ class RegistrarIngresoParams {
   /// Flag preparatorio para la futura integración con el módulo de Archivo Central.
   final bool solicitarHistoriaAmarilla;
 
-  Map<String, dynamic> toJson() => {
-        'pacienteId': pacienteId,
-        'camaId': camaId,
-        'especialidadId': especialidadId,
-        'viaIngreso': viaIngreso,
-        'hospitalizadoPor': hospitalizadoPor,
-        'responsablePago': responsablePago,
-        'medicoTratante': medicoTratante,
-        'diagnosticoInicial': diagnosticoInicial,
-        if (familiarReferenciaNombre != null &&
-            familiarReferenciaNombre!.isNotEmpty)
-          'familiarReferenciaNombre': familiarReferenciaNombre,
-        if (familiarReferenciaTelefono != null &&
-            familiarReferenciaTelefono!.isNotEmpty)
-          'familiarReferenciaTelefono': familiarReferenciaTelefono,
-        if (familiarReferenciaDireccion != null &&
-            familiarReferenciaDireccion!.isNotEmpty)
-          'familiarReferenciaDireccion': familiarReferenciaDireccion,
-        'solicitarHistoriaAmarilla': solicitarHistoriaAmarilla,
-      };
+  // Nuevos campos de creación de paciente
+  final String? nombres;
+  final String? apellidoPaterno;
+  final String? apellidoMaterno;
+  final String? fechaNacimiento;
+  final String? sexo;
+  final String? tipoPaciente;
+  final String? documentoNumero;
+  final String? empresaAseguradora;
+  final String? regional;
+  final String? direccion;
+  final String? telefono;
+  final Map<String, dynamic>? datosTitular;
+
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{
+      if (pacienteId != null) 'pacienteId': pacienteId,
+      'camaId': camaId,
+      'especialidadId': especialidadId,
+      'viaIngreso': viaIngreso,
+      'hospitalizadoPor': hospitalizadoPor,
+      'responsablePago': responsablePago,
+      'medicoTratante': medicoTratante,
+      'diagnosticoInicial': diagnosticoInicial,
+      if (familiarReferenciaNombre != null &&
+          familiarReferenciaNombre!.isNotEmpty)
+        'familiarReferenciaNombre': familiarReferenciaNombre,
+      if (familiarReferenciaTelefono != null &&
+          familiarReferenciaTelefono!.isNotEmpty)
+        'familiarReferenciaTelefono': familiarReferenciaTelefono,
+      if (familiarReferenciaDireccion != null &&
+          familiarReferenciaDireccion!.isNotEmpty)
+        'familiarReferenciaDireccion': familiarReferenciaDireccion,
+      'solicitarHistoriaAmarilla': solicitarHistoriaAmarilla,
+    };
+
+    if (pacienteId == null) {
+      if (nombres != null) json['nombres'] = nombres;
+      if (apellidoPaterno != null) json['apellidoPaterno'] = apellidoPaterno;
+      if (apellidoMaterno != null) json['apellidoMaterno'] = apellidoMaterno;
+      if (fechaNacimiento != null) json['fechaNacimiento'] = fechaNacimiento;
+      if (sexo != null) json['sexo'] = sexo;
+      if (tipoPaciente != null) json['tipoPaciente'] = tipoPaciente;
+      if (documentoNumero != null) json['documentoNumero'] = documentoNumero;
+      if (empresaAseguradora != null) json['empresaAseguradora'] = empresaAseguradora;
+      if (regional != null) json['regional'] = regional;
+      if (direccion != null) json['direccion'] = direccion;
+      if (telefono != null) json['telefono'] = telefono;
+      if (datosTitular != null) json['datosTitular'] = datosTitular;
+    }
+
+    return json;
+  }
 }
 
 /// Resultado de la operación de ingreso hospitalario.

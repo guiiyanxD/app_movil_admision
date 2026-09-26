@@ -18,7 +18,7 @@ class _InternacionesRemoteDataSourceFalso
     return resultadoARetornar ??
         ResultadoIngresoHospitalario(
           internacionId: 'int-123',
-          pacienteId: params.pacienteId,
+          pacienteId: params.pacienteId ?? 'paciente-nuevo-123',
           bedStayId: 'bs-456',
           numeroHc2: 4285,
         );

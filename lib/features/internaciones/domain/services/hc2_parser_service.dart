@@ -211,8 +211,6 @@ class HC2ParserService {
     String? paternoTitular;
     String? maternoTitular;
     String? nombresTitular;
-    DateTime? fechaNacTitular;
-    String? sexoTitular;
 
     if (tipoPaciente == 'beneficiario') {
       matriculaTitular = _extraerCampo(
@@ -231,9 +229,6 @@ class HC2ParserService {
 
       if (matriculaTitular != null) {
         if (infoTit != null) {
-          fechaNacTitular = infoTit.fechaNacimiento;
-          sexoTitular = infoTit.sexo;
-
           if (nombreTitular != null && nombreTitular.isNotEmpty) {
             final desglose = desglosarNombre(
               nombreTitular,
@@ -375,13 +370,9 @@ class HC2ParserService {
       carnetIdentidad:
           (carnet != null && carnet.length >= 4) ? carnet.trim() : null,
       matriculaTitular: matriculaTitular,
-      nombreTitular: nombreTitular?.trim(),
       apellidoPaternoTitular: paternoTitular,
       apellidoMaternoTitular: maternoTitular,
       nombresTitular: nombresTitular,
-      fechaNacimientoTitular: fechaNacTitular,
-      sexoTitular: sexoTitular,
-      empresaTitular: empresa?.trim(),
       fechaIngreso: fechaIngreso,
       servicio: servicio?.trim(),
       camaCodigo: camaCodigo?.trim(),

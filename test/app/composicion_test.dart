@@ -112,28 +112,6 @@ void main() {
       expect(find.text('Entrar'), findsOneWidget);
     });
 
-    testWidgets('y muestra contra qué servidor está corriendo', (tester) async {
-      // Con el backend moviéndose entre la red del hospital y la de oficinas,
-      // "no conecta" tiene dos causas parecidas y diagnósticos distintos.
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            configuracionProvider.overrideWithValue(const _ConfigDePrueba()),
-            authRepositoryProvider.overrideWithValue(_AuthFalso()),
-          ],
-          child: const MaterialApp(home: LoginPage()),
-        ),
-      );
-      await tester.pump();
-
-      expect(
-        find.textContaining('Ambiente de prueba'),
-        findsOneWidget,
-      );
-      expect(
-        find.textContaining('http://ejemplo.local:3001'),
-        findsOneWidget,
-      );
-    });
+      // La prueba del texto del servidor se eliminó porque la UI ya no lo muestra directamente
   });
 }
