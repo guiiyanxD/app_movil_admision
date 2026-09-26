@@ -8,6 +8,7 @@ enum AmbienteServidor {
     nombre: 'Producción Cloud (censo.willdeveloper.site)',
     descripcion: 'Servidor oficial en la nube (Cloudflare)',
     url: 'https://censo.willdeveloper.site',
+    //url: 'http://192.168.0.9:3001',
   ),
   equipo(
     id: 'equipo',

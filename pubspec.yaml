@@ -64,6 +64,7 @@ dev_dependencies:
   mocktail: ^1.0.5
   very_good_analysis: ^10.2.0
   flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.7
 
 flutter:
   uses-material-design: true
@@ -80,3 +81,9 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon.jpg"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/icon.jpg"
+  android: true
+  ios: true
