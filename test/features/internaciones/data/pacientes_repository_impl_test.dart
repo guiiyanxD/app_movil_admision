@@ -19,6 +19,13 @@ class _PacientesRemoteDataSourceFalso implements PacientesRemoteDataSource {
   }
 
   @override
+  Future<List<Paciente>> buscarSugerencias(String query, {String? tipoPaciente}) async {
+    if (excepcionDio != null) throw excepcionDio!;
+    if (pacienteABuscar != null) return [pacienteABuscar!];
+    return [];
+  }
+
+  @override
   Future<Paciente> crearPaciente(CrearPacienteParams params) async {
     if (excepcionDio != null) throw excepcionDio!;
     return pacienteACrear ??

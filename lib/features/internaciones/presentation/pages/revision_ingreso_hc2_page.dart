@@ -9,6 +9,7 @@ import 'package:app_movil/features/internaciones/presentation/providers/ingreso_
 import 'package:app_movil/features/internaciones/presentation/providers/tablero_camas_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app_movil/features/internaciones/presentation/widgets/campo_autocompletado_matricula.dart';
 import 'package:intl/intl.dart';
 
 /// Pantalla de Revisión, Corrección y Confirmación de los datos extraídos
@@ -42,7 +43,6 @@ class _RevisionIngresoHC2PageState
   late final TextEditingController _maternoTitCtrl;
   late final TextEditingController _nombresTitCtrl;
   late final TextEditingController _matriculaTitCtrl;
-  late final TextEditingController _empresaTitCtrl;
 
   // Internación
   late final TextEditingController _medicoCtrl;
@@ -52,10 +52,8 @@ class _RevisionIngresoHC2PageState
   late String _sexo;
   late String _hospitalizadoPor;
   late String _responsablePago;
-  late String _viaIngreso;
+  String _viaIngreso = 'programado'; // default if needed
   DateTime? _fechaNacimiento;
-  DateTime? _fechaNacimientoTitular;
-  String? _sexoTitular;
 
   // Cama
   CamaTablero? _camaSeleccionada;
@@ -79,9 +77,6 @@ class _RevisionIngresoHC2PageState
         TextEditingController(text: d.apellidoMaternoTitular ?? '');
     _nombresTitCtrl = TextEditingController(text: d.nombresTitular ?? '');
     _matriculaTitCtrl = TextEditingController(text: d.matriculaTitular ?? '');
-    _empresaTitCtrl = TextEditingController(
-      text: d.empresaTitular ?? d.empresaAseguradora ?? '',
-    );
 
     _medicoCtrl = TextEditingController(text: d.medicoTratante ?? '');
     _diagnosticoCtrl = TextEditingController(text: d.diagnosticoInicial ?? '');
@@ -92,9 +87,6 @@ class _RevisionIngresoHC2PageState
     _hospitalizadoPor = d.hospitalizadoPor;
     _responsablePago = d.responsablePago;
     _viaIngreso = d.tipoIngreso;
-
-    _fechaNacimientoTitular = d.fechaNacimientoTitular;
-    _sexoTitular = d.sexoTitular;
   }
 
   @override
@@ -109,7 +101,6 @@ class _RevisionIngresoHC2PageState
     _maternoTitCtrl.dispose();
     _nombresTitCtrl.dispose();
     _matriculaTitCtrl.dispose();
-    _empresaTitCtrl.dispose();
     _medicoCtrl.dispose();
     _diagnosticoCtrl.dispose();
     super.dispose();
@@ -194,11 +185,6 @@ class _RevisionIngresoHC2PageState
       nombresTitular: _nombresTitCtrl.text.trim().isNotEmpty
           ? _nombresTitCtrl.text.trim().toUpperCase()
           : null,
-      fechaNacimientoTitular: _fechaNacimientoTitular,
-      sexoTitular: _sexoTitular,
-      empresaTitular: _empresaTitCtrl.text.trim().isNotEmpty
-          ? _empresaTitCtrl.text.trim().toUpperCase()
-          : null,
       fechaIngreso: widget.datosIniciales.fechaIngreso,
       servicio: cama.servicioNombre,
       camaCodigo: cama.codigo,
@@ -271,7 +257,8 @@ class _RevisionIngresoHC2PageState
     final pacienteExistente = asyncPaciente.valueOrNull;
 
     final esBeneficiario = _tipoPaciente == 'beneficiario';
-    final asyncTitular = esBeneficiario
+    final mostrarTitular = esBeneficiario && pacienteExistente == null;
+    final asyncTitular = mostrarTitular
         ? ref.watch(
             pacientePorMatriculaProvider(_matriculaTitCtrl.text.trim()),
           )
@@ -343,9 +330,9 @@ class _RevisionIngresoHC2PageState
                   ? 'Verificando en base de datos...'
                   : (pacienteExistente != null
                       ? 'Paciente registrado en el sistema'
-                      : 'Nuevo paciente — Se registrará automáticamente'),
+                      : 'Nuevo paciente'),
               badgeTexto:
-                  pacienteExistente != null ? 'Existe en BD' : 'Nuevo Registro',
+                  pacienteExistente != null ? 'Existe' : 'Nuevo Paciente',
               badgeColor: pacienteExistente != null
                   ? TemaApp.exito
                   : TemaApp.advertencia,
@@ -355,24 +342,23 @@ class _RevisionIngresoHC2PageState
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
+                        child: CampoMatriculaAutocomplete(
                           controller: _matriculaCtrl,
-                          textCapitalization: TextCapitalization.characters,
-                          decoration: const InputDecoration(
-                            labelText: 'Matrícula CPS *',
-                            prefixIcon: Icon(Icons.badge_outlined),
-                          ),
+                          labelText: 'Matrícula *',
+                          prefixIcon: const Icon(Icons.badge_outlined),
                           onChanged: (_) => setState(() {}),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _carnetCtrl,
-                          decoration: const InputDecoration(
-                            labelText: 'C.I. / Documento',
-                            prefixIcon: Icon(Icons.credit_card_outlined),
-                          ),
+                          onSelected: (paciente) {
+                            setState(() {
+                              _paternoCtrl.text = paciente.apellidoPaterno;
+                              _maternoCtrl.text =
+                                  paciente.apellidoMaterno ?? '';
+                              _nombresCtrl.text = paciente.nombres;
+                              _sexo = paciente.sexo;
+                              _fechaNacimiento = paciente.fechaNacimiento;
+                              _tipoPaciente = paciente.tipoPaciente.toLowerCase();
+                              _empresaCtrl.text = paciente.empresaAseguradora ?? '';
+                            });
+                          },
                         ),
                       ),
                     ],
@@ -389,7 +375,11 @@ class _RevisionIngresoHC2PageState
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
                       Expanded(
                         child: TextFormField(
                           controller: _maternoCtrl,
@@ -441,11 +431,11 @@ class _RevisionIngresoHC2PageState
                           items: const [
                             DropdownMenuItem(
                               value: 'asegurado',
-                              child: Text('Asegurado (Titular)'),
+                              child: Text('Asegurado'),
                             ),
                             DropdownMenuItem(
                               value: 'beneficiario',
-                              child: Text('Beneficiario (Familiar)'),
+                              child: Text('Beneficiario'),
                             ),
                             DropdownMenuItem(
                               value: 'particular',
@@ -508,8 +498,8 @@ class _RevisionIngresoHC2PageState
             ),
             const SizedBox(height: 16),
 
-            // ── SECCIÓN 2: TITULAR (SI ES BENEFICIARIO) ─────────────────────
-            if (esBeneficiario) ...[
+            // ── SECCIÓN 2: TITULAR (SI ES BENEFICIARIO Y NUEVO) ───────────────
+            if (mostrarTitular) ...[
               _TarjetaSeccion(
                 icono: Icons.family_restroom_outlined,
                 colorIcono: const Color(0xFF0284C7),
@@ -530,25 +520,20 @@ class _RevisionIngresoHC2PageState
                     Row(
                       children: [
                         Expanded(
-                          child: TextFormField(
+                          child: CampoMatriculaAutocomplete(
                             controller: _matriculaTitCtrl,
-                            textCapitalization: TextCapitalization.characters,
-                            decoration: const InputDecoration(
-                              labelText: 'Matrícula Titular *',
-                              prefixIcon: Icon(Icons.badge_outlined),
-                            ),
+                            labelText: 'Matrícula Titular *',
+                            prefixIcon: const Icon(Icons.badge_outlined),
+                            filtroTipoPaciente: 'asegurado',
                             onChanged: (_) => setState(() {}),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _empresaTitCtrl,
-                            textCapitalization: TextCapitalization.characters,
-                            decoration: const InputDecoration(
-                              labelText: 'Empresa Titular',
-                              prefixIcon: Icon(Icons.business_outlined),
-                            ),
+                            onSelected: (titular) {
+                              setState(() {
+                                _paternoTitCtrl.text = titular.apellidoPaterno;
+                                _maternoTitCtrl.text =
+                                    titular.apellidoMaterno ?? '';
+                                _nombresTitCtrl.text = titular.nombres;
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -649,7 +634,7 @@ class _RevisionIngresoHC2PageState
                       labelText: 'Cama Destino *',
                       prefixIcon: const Icon(Icons.meeting_room_outlined),
                       errorText: camaEsOcupada
-                          ? 'Cama ocupada / no disponible. Selecciona otra cama disponible.'
+                          ? 'Cama ocupada. Selecciona otra cama disponible.'
                           : null,
                     ),
                     items: todasLasCamas.map((cama) {
@@ -738,6 +723,7 @@ class _RevisionIngresoHC2PageState
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
+                          isExpanded: true,
                           initialValue: _hospitalizadoPor,
                           decoration: const InputDecoration(
                             labelText: 'Hospitalizado por',
@@ -745,23 +731,23 @@ class _RevisionIngresoHC2PageState
                           items: const [
                             DropdownMenuItem(
                               value: 'enfermedad',
-                              child: Text('Enfermedad'),
+                              child: Text('Enfermedad', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'maternidad',
-                              child: Text('Maternidad'),
+                              child: Text('Maternidad', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'emergencia',
-                              child: Text('Emergencia'),
+                              child: Text('Emergencia', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'accidente_trabajo',
-                              child: Text('Accidente de Trabajo'),
+                              child: Text('Accidente de Trabajo', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'accidente_comun',
-                              child: Text('Accidente Común'),
+                              child: Text('Accidente Común', overflow: TextOverflow.ellipsis),
                             ),
                           ],
                           onChanged: (v) {
@@ -774,6 +760,7 @@ class _RevisionIngresoHC2PageState
                       const SizedBox(width: 12),
                       Expanded(
                         child: DropdownButtonFormField<String>(
+                          isExpanded: true,
                           initialValue: _responsablePago,
                           decoration: const InputDecoration(
                             labelText: 'Responsable Pago',
@@ -781,15 +768,15 @@ class _RevisionIngresoHC2PageState
                           items: const [
                             DropdownMenuItem(
                               value: 'CPS',
-                              child: Text('CPS'),
+                              child: Text('CPS', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'SOAT',
-                              child: Text('SOAT'),
+                              child: Text('SOAT', overflow: TextOverflow.ellipsis),
                             ),
                             DropdownMenuItem(
                               value: 'PARTICULAR',
-                              child: Text('PARTICULAR'),
+                              child: Text('PARTICULAR', overflow: TextOverflow.ellipsis),
                             ),
                           ],
                           onChanged: (v) {
@@ -842,7 +829,7 @@ class _RevisionIngresoHC2PageState
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          '¿Deseas solicitar la historia clínica física al archivo central?',
+                          '¿Deseas solicitar la historia clínica al servicio Archivo Clínico?',
                           style: tema.textTheme.bodySmall?.copyWith(
                             color: const Color(0xFF78350F),
                           ),

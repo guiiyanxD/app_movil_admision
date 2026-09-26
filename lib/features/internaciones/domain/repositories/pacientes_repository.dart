@@ -65,4 +65,7 @@ abstract class PacientesRepository {
 
   /// Registra un nuevo paciente en la base de datos institucional.
   Future<Resultado<Paciente>> crearPaciente(CrearPacienteParams params);
+
+  /// Busca sugerencias de pacientes que coincidan parcialmente con la matrícula.
+  Future<Resultado<List<Paciente>>> buscarSugerencias(String query, {String? tipoPaciente});
 }

@@ -40,6 +40,29 @@ class PacientesRemoteDataSource {
     return null;
   }
 
+  /// Busca sugerencias de pacientes que coincidan con la matrícula.
+  Future<List<Paciente>> buscarSugerencias(String query, {String? tipoPaciente}) async {
+    final queryParams = <String, dynamic>{'q': query.trim(), 'limit': 50};
+    if (tipoPaciente != null) {
+      queryParams['tipoPaciente'] = tipoPaciente;
+    }
+    final respuesta = await _dio.get<Object?>(
+      '/pacientes/buscar',
+      queryParameters: queryParams,
+    );
+
+    final data = respuesta.data;
+    if (data is! List) return [];
+
+    final result = <Paciente>[];
+    for (final item in data) {
+      if (item is Map<String, dynamic>) {
+        result.add(Paciente.fromJson(item));
+      }
+    }
+    return result;
+  }
+
   /// Registra un nuevo paciente en la base de datos institucional.
   Future<Paciente> crearPaciente(CrearPacienteParams params) async {
     final respuesta = await _dio.post<Object?>(

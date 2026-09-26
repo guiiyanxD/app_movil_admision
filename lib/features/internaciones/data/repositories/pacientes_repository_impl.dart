@@ -48,4 +48,18 @@ class PacientesRepositoryImpl implements PacientesRepository {
       );
     }
   }
+
+  @override
+  Future<Resultado<List<Paciente>>> buscarSugerencias(String query, {String? tipoPaciente}) async {
+    try {
+      final pacientes = await _remoto.buscarSugerencias(query, tipoPaciente: tipoPaciente);
+      return Exito(pacientes);
+    } on DioException catch (e) {
+      return Fallo(_mapeador.desdeDio(e));
+    } on FormatException catch (e) {
+      return Fallo(FallaFormatoInesperado(e.message));
+    } on TypeError catch (e) {
+      return Fallo(FallaFormatoInesperado('Campo con tipo inesperado: $e'));
+    }
+  }
 }
