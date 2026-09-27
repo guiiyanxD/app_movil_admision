@@ -16,6 +16,8 @@ class TraductorEstados {
         return 'Recibido';
       case 'DISCREPANCY':
         return 'Discrepancia';
+      case 'CANCELED_DUE_TO_EGRESO':
+        return 'Cancelado por Alta';
       default:
         return estado;
     }
