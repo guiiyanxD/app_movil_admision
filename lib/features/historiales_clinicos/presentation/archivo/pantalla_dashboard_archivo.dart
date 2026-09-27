@@ -552,7 +552,7 @@ class PantallaDashboardArchivo extends ConsumerWidget {
                     'LENT',
                     notasArchivo: controller.text,
                   );
-              if (context.mounted) Navigator.of(ctx).pop();
+              if (ctx.mounted) Navigator.of(ctx).pop();
             },
             child: const Text('Guardar'),
           ),
