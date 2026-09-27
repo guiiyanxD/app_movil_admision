@@ -76,5 +76,9 @@
 		<string>Esta aplicacion necesita acceso a la galeria para seleccionar imagenes previas de documentos.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>whatsapp</string>
+		</array>
 	</dict>
 </plist>
