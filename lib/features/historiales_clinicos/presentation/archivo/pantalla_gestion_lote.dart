@@ -14,6 +14,8 @@ class PantallaGestionLote extends ConsumerWidget {
     ref.listen<AsyncValue<void>>(
       historialesControllerProvider,
       (previous, next) {
+        if (ModalRoute.of(context)?.isCurrent != true) return;
+
         if (next.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
