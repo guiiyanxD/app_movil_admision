@@ -34,23 +34,26 @@ class PantallaGestionLote extends ConsumerWidget {
 
     final lotesAsync = ref.watch(lotesDelDiaProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestión de Lote'),
+    return lotesAsync.when(
+      loading: () => Scaffold(
+        appBar: AppBar(title: const Text('Gestión de Lote')),
+        body: const Center(child: CircularProgressIndicator()),
       ),
-      body: lotesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
-        data: (lotes) {
-          final lote = lotes.firstWhere((l) => l.id == loteId);
-          final pendientes =
-              lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
-          final puedeNotificar = pendientes == 0 && lote.estado != 'NOTIFIED';
+      error: (err, stack) => Scaffold(
+        appBar: AppBar(title: const Text('Gestión de Lote')),
+        body: Center(child: Text('Error: $err')),
+      ),
+      data: (lotes) {
+        final lote = lotes.firstWhere((l) => l.id == loteId);
+        final pendientes =
+            lote.solicitudes.where((s) => s.estado == 'REQUESTED').length;
+        final puedeNotificar = pendientes == 0 && lote.estado != 'NOTIFIED';
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Gestión de Lote'),
+          ),
+          body: ListView.builder(
                   itemCount: lote.solicitudes.length,
                   itemBuilder: (context, index) {
                     final sol = lote.solicitudes[index];
@@ -172,47 +175,47 @@ class PantallaGestionLote extends ConsumerWidget {
                     );
                   },
                 ),
-              ),
-              if (lote.estado != 'NOTIFIED')
-                Container(
+          bottomNavigationBar: lote.estado != 'NOTIFIED'
+              ? Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: FilledButton(
-                    onPressed: puedeNotificar
-                        ? () async {
-                            await ref
-                                .read(historialesControllerProvider.notifier)
-                                .notificarLote(lote.id);
-                            if (context.mounted) {
-                              final texto =
-                                  'Tus historias clinicas solicitadas en el lote ${lote.id.substring(0, 5).toUpperCase()} estan listas para ser recogidas';
-                              final uri = Uri.parse(
-                                  'whatsapp://send?text=${Uri.encodeComponent(texto)}');
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri);
-                              } else {
+                  child: SafeArea(
+                    child: FilledButton(
+                      onPressed: puedeNotificar
+                          ? () async {
+                              await ref
+                                  .read(historialesControllerProvider.notifier)
+                                  .notificarLote(lote.id);
+                              if (context.mounted) {
+                                final texto =
+                                    'Tus historias clinicas solicitadas en el lote ${lote.id.substring(0, 5).toUpperCase()} estan listas para ser recogidas';
+                                final uri = Uri.parse(
+                                    'whatsapp://send?text=${Uri.encodeComponent(texto)}');
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri);
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text('No se pudo abrir WhatsApp.')),
+                                    );
+                                  }
+                                }
                                 if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text('No se pudo abrir WhatsApp.')),
-                                  );
+                                  Navigator.of(context).pop();
                                 }
                               }
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                              }
                             }
-                          }
-                        : null,
-                    child: const Text('Notificar a Admisión'),
+                          : null,
+                      child: const Text('Notificar a Admisión'),
+                    ),
                   ),
-                ),
-            ],
-          );
-        },
-      ),
+                )
+              : null,
+        );
+      },
     );
   }
 
